@@ -1,0 +1,10 @@
+{
+    "cmake.configureSettings": {
+        "BUILD": "release" /*release OR debug*/
+    },
+    "cmake.configureOnOpen": false,
+    "files.associations": {
+        "*.c": "c",
+        "*.h": "c"
+    }
+}
