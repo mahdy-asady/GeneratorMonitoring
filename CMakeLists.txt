@@ -55,6 +55,11 @@ set(CMAKE_RUNTIME_OUTPUT_DIRECTORY "${CMAKE_SOURCE_DIR}/build")
 
 # Project setup
 set(INC_FILES src/app/main.c
+              src/mcu/stm32f103c8/clock.c
+
+              src/mcu/stm32f103c8/HAL_Driver/Src/stm32f1xx_hal.c
+              src/mcu/stm32f103c8/HAL_Driver/Src/stm32f1xx_hal_rcc.c
+              src/mcu/stm32f103c8/HAL_Driver/Src/stm32f1xx_hal_cortex.c
               src/mcu/stm32f103c8/system_stm32f1xx.c
               src/mcu/stm32f103c8/startup_stm32f103xb.s
 )
@@ -63,9 +68,6 @@ add_executable(${PROJECT_NAME} ${INC_FILES})
 
 
 set_target_properties(${PROJECT_NAME} PROPERTIES OUTPUT_NAME "${PROJECT_NAME}.elf")
-
-target_include_directories(${PROJECT_NAME} PUBLIC "src/peripheral")
-target_include_directories(${PROJECT_NAME} PUBLIC "src/shared")
 
 
 target_link_options(${PROJECT_NAME} PRIVATE
@@ -91,6 +93,7 @@ target_include_directories(${PROJECT_NAME} PUBLIC "src/mcu/stm32f103c8/HAL_Drive
 target_include_directories(${PROJECT_NAME} PUBLIC "src/mcu/stm32f103c8/HAL_Driver/Inc/Legacy")
 target_include_directories(${PROJECT_NAME} PUBLIC "src/mcu/stm32f103c8/CMSIS/Device/ST/STM32F1xx/Include")
 target_include_directories(${PROJECT_NAME} PUBLIC "src/mcu/stm32f103c8/CMSIS/Include")
-
+target_include_directories(${PROJECT_NAME} PUBLIC "src/peripherals")
+target_include_directories(${PROJECT_NAME} PUBLIC "src/shared")
 
 set_directory_properties(PROPERTIES ADDITIONAL_MAKE_CLEAN_FILES "${PROJECT_NAME}.hex;${PROJECT_NAME}.eeprom;${PROJECT_NAME}.lst")
