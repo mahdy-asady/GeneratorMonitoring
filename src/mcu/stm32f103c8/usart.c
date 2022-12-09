@@ -23,22 +23,6 @@ bool findHandler(UART_HandleTypeDef *HAL_Handler, usartHandle *handler) {
     return true;
 }
 
-bool findUSART(USART_TypeDef *usartInstance, UART_HandleTypeDef *HAL_Handler) {
-    switch ((uint32_t)usartInstance) {
-        case (uint32_t)USART1:
-            HAL_Handler = &usartHandlers[0]->HAL_Handler;
-            break;
-        case (uint32_t)USART2:
-            HAL_Handler = &usartHandlers[1]->HAL_Handler;
-            break;
-        
-        default:
-            return false;
-            break;
-    }
-    return true;
-}
-
 bool usartInit(usartHandle *handle, USART_TypeDef *usartInstance, uint32_t baudRate) {
     fifoInit(&handle->buffer);
 
