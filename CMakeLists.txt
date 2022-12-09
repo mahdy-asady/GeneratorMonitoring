@@ -69,10 +69,12 @@ set(INC_FILES src/app/main.c
               src/mcu/stm32f103c8/HAL_Driver/Src/stm32f1xx_hal_gpio.c
               src/mcu/stm32f103c8/HAL_Driver/Src/stm32f1xx_hal_dma.c
               src/mcu/stm32f103c8/HAL_Driver/Src/stm32f1xx_hal_cortex.c
+
               src/mcu/stm32f103c8/HAL_Driver/Src/stm32f1xx_hal_pwr.c
               src/mcu/stm32f103c8/HAL_Driver/Src/stm32f1xx_hal_flash.c
               src/mcu/stm32f103c8/HAL_Driver/Src/stm32f1xx_hal_flash_ex.c
               src/mcu/stm32f103c8/HAL_Driver/Src/stm32f1xx_hal_exti.c
+              src/mcu/stm32f103c8/HAL_Driver/Src/stm32f1xx_hal_uart.c
 
               src/mcu/stm32f103c8/system_stm32f1xx.c
               src/mcu/stm32f103c8/startup_stm32f103xb.s
