@@ -57,8 +57,10 @@ set(CMAKE_RUNTIME_OUTPUT_DIRECTORY "${CMAKE_SOURCE_DIR}/build")
 set(INC_FILES src/app/main.c
               src/mcu/stm32f103c8/clock.c
 
-              src/mcu/stm32f103c8/stm32f1xx_it.c
+              src/shared/fifo/fifo.c
+
               src/mcu/stm32f103c8/stm32f1xx_hal_msp.c
+              src/mcu/stm32f103c8/stm32f1xx_it.c
 
               src/mcu/stm32f103c8/HAL_Driver/Src/stm32f1xx_hal_gpio_ex.c
               src/mcu/stm32f103c8/HAL_Driver/Src/stm32f1xx_hal_tim.c
