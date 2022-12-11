@@ -11,7 +11,7 @@ typedef struct {
     //USART_TypeDef  *instance;
     UART_HandleTypeDef  HAL_Handler;
     fifoData            buffer;
-    uint8_t             txBuffer;
+    uint8_t             rxCharBuffer;
 } usartHandle;
 
 /* Implement USART device */

@@ -50,7 +50,7 @@ bool usartInit(usartHandle *handle, USART_TypeDef *usartInstance, uint32_t baudR
             debugFatal("Wrong USART selected!");
             break;
     }
-    HAL_UART_Receive_IT (&handle->HAL_Handler, &handle->txBuffer, 1);
+    HAL_UART_Receive_IT (&handle->HAL_Handler, &handle->rxCharBuffer, 1);
     return true;
 }
 
@@ -65,10 +65,10 @@ void HAL_UART_RxCpltCallback(UART_HandleTypeDef *huart)
 {
     usartHandle *handle = 0;
     if(findHandler(huart, handle)) {
-        HAL_UART_Receive_IT(&handle->HAL_Handler, &handle->txBuffer, 1);
+        HAL_UART_Receive_IT(&handle->HAL_Handler, &handle->rxCharBuffer, 1);
         //call buffer function
         if(!fifoIsFull(&handle->buffer))
-            fifoPush(&handle->buffer, handle->txBuffer);
+            fifoPush(&handle->buffer, handle->rxCharBuffer);
     }
 }
 
