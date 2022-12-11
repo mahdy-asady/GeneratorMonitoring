@@ -18,7 +18,7 @@
             "serialNumber": "", //If you have more than one J-Link probe, add the serial number here.
             "runToMain": true,
             "armToolchainPath": "/opt/gcc-arm-none-eabi/bin/",
-            "svdFile": "${workspaceRoot}src/mcu/stm32f103c8/device/STM32F103.svd",
+            "svdFile": "${workspaceRoot}/src/mcu/stm32f103c8/device/STM32F103.svd",
             "showDevDebugOutput": "raw"
         }
     ]
