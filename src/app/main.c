@@ -1,3 +1,5 @@
+#include <stdio.h>
+
 #include "stm32f1xx_hal.h"
 #include "clock.h"
 #include "usart.h"
@@ -11,11 +13,11 @@ int main(void) {
     clockConfig();
 
     GPIO_Init();
-    
-    usartHandle usartESP;
+
+    usartHandle usartESP = {0};
     usartInit(&usartESP, USART1, 115200);
     usartEnableDebug(&usartESP);
-    
+    printf("Hello!!!\n");
 
     while(1){
         HAL_Delay(500);
