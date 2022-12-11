@@ -1,10 +1,9 @@
 #include "usart.h"
 #include "debug.h"
 #include "retarget/retarget.h"
-
+#include "config.h"
 #include "stm32f1xx_hal_uart.h"
 
-#define USART_COUNT     3
 usartHandle *usartHandlers[USART_COUNT];
 
 bool findHandler(UART_HandleTypeDef *HAL_Handler, usartHandle **handler) {
@@ -70,10 +69,4 @@ void HAL_UART_RxCpltCallback(UART_HandleTypeDef *huart)
         if(!fifoIsFull(&handle->buffer))
             fifoPush(&handle->buffer, handle->rxCharBuffer);
     }
-}
-
-void USART1_IRQHandler(void)
-{
-    if(usartHandlers[0])
-        HAL_UART_IRQHandler(&usartHandlers[0]->HAL_Handler);
 }
