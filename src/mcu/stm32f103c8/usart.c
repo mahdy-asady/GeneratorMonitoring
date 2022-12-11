@@ -7,13 +7,13 @@
 #define USART_COUNT     3
 usartHandle *usartHandlers[USART_COUNT];
 
-bool findHandler(UART_HandleTypeDef *HAL_Handler, usartHandle *handler) {
+bool findHandler(UART_HandleTypeDef *HAL_Handler, usartHandle **handler) {
     switch ((uint32_t)HAL_Handler->Instance) {
         case (uint32_t)USART1:
-            handler = usartHandlers[0];
+            *handler = usartHandlers[0];
             break;
         case (uint32_t)USART2:
-            handler = usartHandlers[1];
+            *handler = usartHandlers[1];
             break;
         
         default:
@@ -63,8 +63,8 @@ void usartEnableDebug(usartHandle *handle) {
 /* USART data reception intrrupt handler */
 void HAL_UART_RxCpltCallback(UART_HandleTypeDef *huart) 
 {
-    usartHandle *handle = 0;
-    if(findHandler(huart, handle)) {
+    usartHandle *handle = NULL;
+    if(findHandler(huart, &handle)) {
         HAL_UART_Receive_IT(&handle->HAL_Handler, &handle->rxCharBuffer, 1);
         //call buffer function
         if(!fifoIsFull(&handle->buffer))
