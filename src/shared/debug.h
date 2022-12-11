@@ -16,8 +16,8 @@ WARN    YES      YES      YES      NO      NO
 ERROR   YES      YES      YES      YES      NO*/
 
 /* -- Macro Definitions */
-
-#define debugFatal(M, ...)           debugError(M, ##__VA_ARGS__); while(1);
+#define debugFatal(M, ...) {}
+//#define debugFatal(M, ...)           debugError(M, ##__VA_ARGS__); while(1);
 
 #if LOG_LEVEL>= LOG_LEVEL_ERROR
     #define debugError(M, ...)           printf("[ERR] (%s:%d) " M "\n", __BASE_FILE__, __LINE__, ##__VA_ARGS__);
