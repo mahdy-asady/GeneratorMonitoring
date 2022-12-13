@@ -14,9 +14,11 @@ int main(void) {
 
     GPIO_Init();
 
-    usartHandle usartESP = {0};
+    usartHandle usartESP = {0},
+                usartDebug = {0};
     usartInit(&usartESP, USART1, 115200);
-    usartEnableDebug(&usartESP);
+    usartInit(&usartDebug, USART2, 115200);
+    usartEnableDebug(&usartDebug);
     printf("Hello!!!\n");
 
     while(1){
