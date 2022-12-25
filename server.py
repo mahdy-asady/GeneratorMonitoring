@@ -29,19 +29,17 @@ def n2h(Number, Pad):
 def debugPacket(Packet):
     (PackVersion, PackMsgID, _1,
      PackMCUID,
-     PackCRC,
      PackVoltage, PackDuty, PackFreq,
      PackTemp, PackHumid,
      PackRPM, PackDigits, _2,
      PackGyroX, PackGyroY,
      PackGyroZ, PackAccX,
-     PackAccY, PackAccZ) = Packet
+     PackAccY, PackAccZ,
+     PackCRC) = Packet
     print("\t\t+--------+--------+--------+--------+")
     print("\t\t|{}|{}|{}|".format(n2h(PackVersion, 8), n2h(PackMsgID, 8), n2h(_1, 17)))
     print("\t\t+--------+--------+--------+--------+")
     print("\t\t|{}|".format(n2h(PackMCUID, 35)))
-    print("\t\t+--------+--------+--------+--------+")
-    print("\t\t|{}|".format(n2h(PackCRC, 35)))
     print("\t\t+--------+--------+--------+--------+")
     print("\t\t|{}|{}|{}|".format(n2h(PackVoltage, 17), n2h(PackDuty, 8), n2h(PackFreq, 8)))
     print("\t\t+--------+--------+--------+--------+")
@@ -55,22 +53,24 @@ def debugPacket(Packet):
     print("\t\t+--------+--------+--------+--------+")
     print("\t\t|{}|{}|".format(n2h(PackAccY, 17), n2h(PackAccZ, 17)))
     print("\t\t+--------+--------+--------+--------+")
+    print("\t\t|{}|".format(n2h(PackCRC, 35)))
+    print("\t\t+--------+--------+--------+--------+")
     
 
 # Gets message, processes and stores to db and returns non-zero MessageID upon successfull operation
 def processMessage(Bytes):
-    Packet = struct.unpack('<BBHLLHBBHHHBBHHHHHH', Bytes)
+    Packet = struct.unpack('<BBHLHBBHHHBBHHHHHHL', Bytes)
     if Debug: debugPacket(Packet)
     # Extract fields
     (PackVersion, PackMsgID, _,
      PackMCUID,
-     PackCRC,
      PackVoltage, PackDuty, PackFreq,
      PackTemp, PackHumid,
      PackRPM, PackDigits, _,
      PackGyroX, PackGyroY,
      PackGyroZ, PackAccX,
-     PackAccY, PackAccZ) = Packet
+     PackAccY, PackAccZ,
+     PackCRC) = Packet
 
     return PackMsgID
 
@@ -80,6 +80,7 @@ def sendACK(Socket, ClientAddress, MessageID):
     Packet = struct.pack('<BB', 0x01, MessageID)
     Socket.sendto(Packet, ClientAddress)
 
+#####################################################################################
 
 Server = setupServer()
 print("UDP server up and listening...\n\n")
