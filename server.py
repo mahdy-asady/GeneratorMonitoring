@@ -1,6 +1,10 @@
 import socket
 import struct
 
+import influxdb_client, os, time
+from influxdb_client import InfluxDBClient, Point, WritePrecision
+from influxdb_client.client.write_api import SYNCHRONOUS
+
 #####################################################################################
 
 # UDP listening configs
@@ -9,6 +13,11 @@ LocalPort   = 4000
 
 # Message buffer size
 BufferSize  = 36
+
+DbToken = os.environ.get("INFLUXDB_TOKEN")
+DbOrg = os.environ.get("INFLUXDB_ORG")
+DbUrl = "https://us-east-1-1.aws.cloud2.influxdata.com"
+DbBucket="STM32-GeneratorMonitoring"
 
 Debug = True
 
@@ -58,9 +67,10 @@ def debugPacket(Packet):
     
 
 # Gets message, processes and stores to db and returns non-zero MessageID upon successfull operation
-def processMessage(Bytes):
+def processMessage(Writer, Bytes):
     Packet = struct.unpack('<BBHLHBBHHHBBHHHHHHL', Bytes)
     if Debug: debugPacket(Packet)
+
     # Extract fields
     (PackVersion, PackMsgID, _,
      PackMCUID,
@@ -71,6 +81,33 @@ def processMessage(Bytes):
      PackGyroZ, PackAccX,
      PackAccY, PackAccZ,
      PackCRC) = Packet
+    
+    Digital1 = PackDigits & 0x80
+    Digital2 = PackDigits & 0x40
+
+    # Todo: Check CRC
+
+
+    DataPoint = (
+        Point("Sensors")
+        .tag("SensorID", PackMCUID)
+        .field("Voltage", PackVoltage)
+        .field("Duty", PackDuty)
+        .field("Frequency", PackFreq)
+        .field("Temperature", PackTemp)
+        .field("Humidity", PackHumid)
+        .field("MotorRPM", PackRPM)
+        .field("Digital-1", Digital1)
+        .field("Digital-2", Digital2)
+        .field("Gyro-X", PackGyroX)
+        .field("Gyro-Y", PackGyroY)
+        .field("Gyro-Z", PackGyroZ)
+        .field("Accelerometer-X", PackAccX)
+        .field("Accelerometer-Y", PackAccY)
+        .field("Accelerometer-Z", PackAccZ)
+    )
+
+    Writer.write(bucket=DbBucket, org=DbOrg, record=DataPoint)
 
     return PackMsgID
 
@@ -85,12 +122,14 @@ def sendACK(Socket, ClientAddress, MessageID):
 Server = setupServer()
 print("UDP server up and listening...\n\n")
 
+DataWriter = influxdb_client.InfluxDBClient(url=DbUrl, token=DbToken, org=DbOrg).write_api(write_options=SYNCHRONOUS)
+
 # Listen for incoming datagrams
 while(True):
     BytesPair = Server.recvfrom(BufferSize)
     ClientAddress = BytesPair[1]
     if Debug: print("Message Received from:", ClientAddress)
-    MessageID = processMessage(BytesPair[0])
+    MessageID = processMessage(DataWriter, BytesPair[0])
 
     if MessageID:
         # Sending a ACK to client
