@@ -4,11 +4,11 @@ import struct
 #####################################################################################
 
 # UDP listening configs
-localIP     = "0.0.0.0"
-localPort   = 4000
+LocalIP     = "0.0.0.0"
+LocalPort   = 4000
 
 # Message buffer size
-bufferSize  = 36
+BufferSize  = 36
 
 Debug = True
 
@@ -20,7 +20,7 @@ def setupServer():
     # Create a datagram socket
     UDPServerSocket = socket.socket(family=socket.AF_INET, type=socket.SOCK_DGRAM)
     # Bind to address and ip
-    UDPServerSocket.bind((localIP, localPort))
+    UDPServerSocket.bind((LocalIP, LocalPort))
     return UDPServerSocket
 
 def n2h(Number, Pad):
@@ -86,7 +86,7 @@ print("UDP server up and listening...\n\n")
 
 # Listen for incoming datagrams
 while(True):
-    BytesPair = Server.recvfrom(bufferSize)
+    BytesPair = Server.recvfrom(BufferSize)
     ClientAddress = BytesPair[1]
     if Debug: print("Message Received from:", ClientAddress)
     MessageID = processMessage(BytesPair[0])
