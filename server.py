@@ -8,13 +8,6 @@ localPort   = 4000
 # Message buffer size
 bufferSize  = 36
 
-
-##################################################################################
-msgFromServer       = "Hello UDP Client"
-
-bytesToSend         = str.encode(msgFromServer)
-##################################################################################
-
 # Setup UDP listening
 def setupServer():
     # Create a datagram socket
@@ -25,8 +18,19 @@ def setupServer():
 
 # Gets message, processes and stores to db and returns non-zero MessageID upon successfull operation
 def processMessage(Bytes):
-    print(struct.unpack('<BBHLLHBBHHHBBHHHHHH', Bytes))
-    return 100
+    Packet = struct.unpack('<BBHLLHBBHHHBBHHHHHH', Bytes)
+    # Extract fields
+    (PackVersion, PackMsgID, _,
+     PackMCUID,
+     PackCRC,
+     PackVoltage, PackDuty, PackFreq,
+     PackTemp, PackHumid,
+     PackRPM, PackDigits, _,
+     PackGyroX, PackGyroY,
+     PackGyroZ, PackAccX,
+     PackAccY, PackAccZ) = Packet
+
+    return PackMsgID
 
 
 # Send ACK Message to client
