@@ -23,6 +23,14 @@ Debug = True
 
 #####################################################################################
 
+# CRC32 Hash Calculator
+def crc32mpeg2(buf, crc=0xffffffff):
+    for val in buf:
+        crc ^= val << 24
+        for _ in range(8):
+            crc = crc << 1 if (crc & 0x80000000) == 0 else (crc << 1) ^ 0x104c11db7
+    return crc
+
 
 # Setup UDP listening
 def setupServer():
@@ -86,7 +94,9 @@ def processMessage(Writer, Bytes):
     Digital2 = PackDigits & 0x40
 
     # Todo: Check CRC
-
+    if(crc32mpeg2(Bytes[:32]) != PackCRC):
+        if Debug: print("CRC verification failed!")
+        return 0
 
     DataPoint = (
         Point("Sensors")
@@ -108,6 +118,8 @@ def processMessage(Writer, Bytes):
     )
 
     Writer.write(bucket=DbBucket, org=DbOrg, record=DataPoint)
+
+    if Debug: print("Write data done!")
 
     return PackMsgID
 
