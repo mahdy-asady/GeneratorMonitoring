@@ -131,6 +131,10 @@ def sendACK(Socket, ClientAddress, MessageID):
 
 #####################################################################################
 
+if Debug:
+    print("Database Token:", DbToken)
+    print("Database Org:", DbOrg)
+
 Server = setupServer()
 print("UDP server up and listening...\n\n")
 
