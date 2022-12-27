@@ -43,6 +43,7 @@ void espInit(usartHandle *handle, GPIO_TypeDef *ResetGPIO, uint16_t ResetPin) {
     if(!SendCommand("AT"))
         debugInfo("ESP-AT Initialization failed!!!");
 
+    SendCommand("AT+SYSSTORE=0");
     SendCommand("ATE0");
 }
 
