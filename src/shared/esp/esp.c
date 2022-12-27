@@ -11,7 +11,7 @@ int SendCommandAndWait(char *cmd, uint32_t Timeout) {
     uint16_t Holder = HAL_GetTick();
     while ((HAL_GetTick() - Holder) <= Timeout)
     {
-        usartReadLine(Connection, strBuffer, ESP_RESPONSE_BUFFER_LENGTH);
+        usartReadLine(Connection, strBuffer, ESP_RESPONSE_BUFFER_LENGTH, Timeout);
         printf("%s\n", strBuffer);
 
         if(strCompare(strBuffer, "ERROR") == 0)
@@ -43,7 +43,6 @@ bool espWifiConnect(char *SSID, char *Password) {
     debugInfo("Connect to Access point ...");
     char ConnectionString[100];
     strConcat(ConnectionString, 100, 5, "AT+CWJAP=\"", SSID, "\",\"", Password, "\"");
-    debugInfo(ConnectionString);
     if(!SendCommandAndWait(ConnectionString, ESP_AP_CONNECTION_DELAY)) {
         debugInfo("Access Point Connection failed!!!");
         return false;
