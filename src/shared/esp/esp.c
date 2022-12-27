@@ -24,11 +24,21 @@ int SendCommandAndWait(char *cmd, uint32_t Timeout) {
 
 #define SendCommand(CMD) SendCommandAndWait(CMD, ESP_DEFAULT_RESPONSE_DELAY)
 
+
+void ResetESP(GPIO_TypeDef *ResetGPIO, uint16_t ResetPin) {
+    HAL_GPIO_WritePin(ResetGPIO, ResetPin, GPIO_PIN_RESET);
+    HAL_Delay(10);
+    HAL_GPIO_WritePin(ResetGPIO, ResetPin, GPIO_PIN_SET);
+    HAL_Delay(1500);
+}
+
 //*****************************************************************************************
 
-void espInit(usartHandle *handle) {
+void espInit(usartHandle *handle, GPIO_TypeDef *ResetGPIO, uint16_t ResetPin) {
     debugInfo("Initialize ESP-AT...");
     Connection = handle;
+
+    ResetESP(ResetGPIO, ResetPin);
 
     if(!SendCommand("AT"))
         debugInfo("ESP-AT Initialization failed!!!");
