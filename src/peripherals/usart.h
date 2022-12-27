@@ -27,6 +27,6 @@ void usartWrite(usartHandle *handle, uint8_t *Data, uint16_t Size);
 
 uint16_t usartRead(usartHandle *handle, uint8_t *Buffer, uint16_t MaxSize, uint16_t Timeout);
 
-uint16_t usartReadLine(usartHandle *handle, uint8_t *Buffer, uint16_t MaxSize, uint16_t Timeout);
+uint16_t usartReadLine(usartHandle *handle, char *Buffer, uint16_t MaxSize);
 
 #endif
