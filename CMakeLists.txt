@@ -59,6 +59,7 @@ set(INC_FILES src/app/main.c
               src/mcu/stm32f103c8/usart.c
 
               src/shared/fifo/fifo.c
+              src/shared/esp/esp.c
               src/shared/retarget/retarget.c
 
               src/mcu/stm32f103c8/stm32f1xx_hal_msp.c

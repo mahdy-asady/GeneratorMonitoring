@@ -3,6 +3,7 @@
 #include "stm32f1xx_hal.h"
 #include "clock.h"
 #include "usart.h"
+#include "esp/esp.h"
 
 
 static void GPIO_Init(void);
@@ -20,6 +21,8 @@ int main(void) {
     usartInit(&usartDebug, USART2, 115200);
     usartEnableDebug(&usartDebug);
     printf("Hello!!!\n");
+
+    espInit(&usartESP);
 
     while(1){
         HAL_Delay(500);
