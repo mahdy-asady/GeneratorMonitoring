@@ -35,3 +35,21 @@ void espInit(usartHandle *handle) {
 
     SendCommand("ATE0");
 }
+
+bool espWifiConnect(char *SSID, char *Password) {
+    debugInfo("Set station Mode ...");
+    SendCommand("AT+CWMODE=1");//Set mode to wifi station
+    
+    debugInfo("Connect to Access point ...");
+    char ConnectionString[100];
+    strConcat(ConnectionString, 100, 5, "AT+CWJAP=\"", SSID, "\",\"", Password, "\"");
+    debugInfo(ConnectionString);
+    if(!SendCommandAndWait(ConnectionString, ESP_AP_CONNECTION_DELAY)) {
+        debugInfo("Access Point Connection failed!!!");
+        return false;
+    }
+    else
+        debugInfo("Access Point Connected!!!");
+
+    return true;
+}

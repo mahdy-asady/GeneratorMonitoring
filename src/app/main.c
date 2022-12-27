@@ -23,6 +23,7 @@ int main(void) {
     printf("Hello!!!\n");
 
     espInit(&usartESP);
+    espWifiConnect("esp32", "123456789");
 
     while(1){
         HAL_Delay(500);
