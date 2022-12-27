@@ -1,23 +1,8 @@
 #include "esp.h"
 #include "debug.h"
+#include "string/string.h"
 
 usartHandle *Connection;
-
-
-int StrCompare(char* String1, char *String2) {
-    while(1) {
-        if(*String1 == 0 && *String2 == 0)
-            return 0;
-        
-        if(*String1 < *String2)
-            return -1;
-        else if(*String1 > *String2)
-            return 1;
-        String1++;
-        String2++;
-    }
-}
-
 
 int SendCommandAndWait(char *cmd, uint32_t Timeout) {
     usartWriteLine(Connection, cmd);
@@ -29,9 +14,9 @@ int SendCommandAndWait(char *cmd, uint32_t Timeout) {
         usartReadLine(Connection, strBuffer, ESP_RESPONSE_BUFFER_LENGTH);
         printf("%s\n", strBuffer);
 
-        if(StrCompare(strBuffer, "ERROR") == 0)
+        if(strCompare(strBuffer, "ERROR") == 0)
             return 0;
-        if(StrCompare(strBuffer, "OK") == 0)
+        if(strCompare(strBuffer, "OK") == 0)
             return 1;
     }
     return 0;
