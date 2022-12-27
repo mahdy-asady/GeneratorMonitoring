@@ -1,3 +1,5 @@
+#include <string.h>
+
 #include "usart.h"
 #include "debug.h"
 #include "retarget/retarget.h"
@@ -74,6 +76,11 @@ void HAL_UART_RxCpltCallback(UART_HandleTypeDef *huart)
 
 void usartWrite(usartHandle *handle, uint8_t *Data, uint16_t Size) {
     HAL_UART_Transmit(&handle->HAL_Handler, Data, Size, 100);
+}
+
+void usartWriteLine(usartHandle *handle, char *Text) {
+    usartWrite(handle, (uint8_t *)Text, strlen(Text));
+    usartWrite(handle, (uint8_t *)"\r\n", 2);
 }
 
 uint16_t usartRead(usartHandle *handle, uint8_t *Buffer, uint16_t MaxSize, uint16_t Timeout) {
