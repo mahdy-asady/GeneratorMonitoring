@@ -22,4 +22,9 @@ bool usartInit(usartHandle *handle, USART_TypeDef *usartInstance, uint32_t baudR
 */
 void usartEnableDebug(usartHandle *handle);
 
+
+void usartWrite(usartHandle *handle, uint8_t *Data, uint16_t Size);
+
+uint16_t usartRead(usartHandle *handle, uint8_t *Buffer, uint16_t MaxSize, uint16_t Timeout);
+
 #endif

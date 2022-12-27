@@ -68,5 +68,24 @@ void HAL_UART_RxCpltCallback(UART_HandleTypeDef *huart)
         //call buffer function
         if(!fifoIsFull(&handle->buffer))
             fifoPush(&handle->buffer, handle->rxCharBuffer);
+        
     }
+}
+
+void usartWrite(usartHandle *handle, uint8_t *Data, uint16_t Size) {
+    HAL_UART_Transmit(&handle->HAL_Handler, Data, Size, 100);
+}
+
+uint16_t usartRead(usartHandle *handle, uint8_t *Buffer, uint16_t MaxSize, uint16_t Timeout) {
+    uint32_t TickStart = HAL_GetTick();
+    uint16_t Size = 0;
+    uint8_t *BufferPointer = Buffer;
+    
+    while(((HAL_GetTick() - TickStart) <= Timeout) && Size < MaxSize) {
+        if(!fifoIsEmpty(&handle->buffer)) {
+            *(BufferPointer++) = fifoPop(&handle->buffer);
+            Size++;
+        }
+    }
+    return Size;
 }
