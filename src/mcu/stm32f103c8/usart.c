@@ -89,3 +89,30 @@ uint16_t usartRead(usartHandle *handle, uint8_t *Buffer, uint16_t MaxSize, uint1
     }
     return Size;
 }
+
+
+uint16_t usartReadLine(usartHandle *handle, uint8_t *Buffer, uint16_t MaxSize, uint16_t Timeout) {
+    uint32_t TickStart = HAL_GetTick();
+    uint16_t Size = 0;
+    uint8_t *BufferPointer = Buffer;
+
+    while(((HAL_GetTick() - TickStart) <= Timeout) && Size < MaxSize) {
+        if(!fifoIsEmpty(&handle->buffer)) {
+            *BufferPointer = fifoPop(&handle->buffer);
+            
+            if(*BufferPointer == '\n') {
+                //remove \r\n
+                *BufferPointer = 0;
+                if(*(BufferPointer - 1) == '\r') {
+                    Size--;
+                    *(BufferPointer - 1) = 0;
+                }
+                break;
+            }
+
+            Size++;
+            BufferPointer++;
+        }
+    }
+    return Size;
+}
