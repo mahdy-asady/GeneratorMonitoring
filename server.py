@@ -43,6 +43,9 @@ def setupServer():
 def n2h(Number, Pad):
     return hex(Number).center(Pad, " ")
 
+def debugPrint(*args):
+    if Debug: print(*args)
+
 def debugPacket(Packet):
     (PackVersion, PackMsgID, _1,
      PackMCUID,
@@ -77,7 +80,7 @@ def debugPacket(Packet):
 # Gets message, processes and stores to db and returns non-zero MessageID upon successfull operation
 def processMessage(Writer, Bytes):
     if len(Bytes) != 36:
-        if Debug: print("Not standard message length!")
+        debugPrint("Not standard message length!")
         return 0
     Packet = struct.unpack('<BBHLHBBHHHBBHHHHHHL', Bytes)
     if Debug: debugPacket(Packet)
@@ -98,7 +101,7 @@ def processMessage(Writer, Bytes):
 
     # Todo: Check CRC
     if(crc32mpeg2(Bytes[:32]) != PackCRC):
-        if Debug: print("CRC verification failed!")
+        debugPrint("CRC verification failed!")
         return 0
 
     DataPoint = (
@@ -122,7 +125,7 @@ def processMessage(Writer, Bytes):
 
     Writer.write(bucket=DbBucket, org=DbOrg, record=DataPoint)
 
-    if Debug: print("Write data done!")
+    debugPrint("Write data done!")
 
     return PackMsgID
 
@@ -134,9 +137,8 @@ def sendACK(Socket, ClientAddress, MessageID):
 
 #####################################################################################
 
-if Debug:
-    print("Database Token:", DbToken)
-    print("Database Org:", DbOrg)
+debugPrint("Database Token:", DbToken)
+debugPrint("Database Org:", DbOrg)
 
 Server = setupServer()
 print("UDP server up and listening...\n\n")
@@ -147,10 +149,10 @@ DataWriter = influxdb_client.InfluxDBClient(url=DbUrl, token=DbToken, org=DbOrg)
 while(True):
     BytesPair = Server.recvfrom(BufferSize)
     ClientAddress = BytesPair[1]
-    if Debug: print("Message Received from:", ClientAddress)
+    debugPrint("Message Received from:", ClientAddress)
     MessageID = processMessage(DataWriter, BytesPair[0])
 
     if MessageID:
         # Sending a ACK to client
         sendACK(Server, ClientAddress, MessageID)
-    if Debug: print("\n=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=\n")
+    debugPrint("\n=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=\n")
