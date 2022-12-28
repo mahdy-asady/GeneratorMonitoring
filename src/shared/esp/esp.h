@@ -10,6 +10,6 @@ bool espWifiConnect(char *SSID, char *Password);
 
 void espStartPassThroughUDP(char *ServerAddress, uint16_t ServerPort, uint16_t LocalPort);
 
-void espStopPassThroughUDP();
+void espStopPassThroughUDP(void);
 
 #endif

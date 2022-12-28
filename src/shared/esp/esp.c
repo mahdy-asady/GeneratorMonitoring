@@ -79,9 +79,9 @@ void espStartPassThroughUDP(char *ServerAddress, uint16_t ServerPort, uint16_t L
     HAL_Delay(200);
 }
 
-void espStopPassThroughUDP() {
+void espStopPassThroughUDP(void) {
     HAL_Delay(200);
-    usartWrite(Connection, "+++", 3);
+    usartWrite(Connection, (uint8_t *)"+++", 3);
     HAL_Delay(1000);
 
     debugInfo("UDP passthrough stopped.");
