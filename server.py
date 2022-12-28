@@ -76,6 +76,9 @@ def debugPacket(Packet):
 
 # Gets message, processes and stores to db and returns non-zero MessageID upon successfull operation
 def processMessage(Writer, Bytes):
+    if len(Bytes) != 36:
+        if Debug: print("Not standard message length!")
+        return 0
     Packet = struct.unpack('<BBHLHBBHHHBBHHHHHHL', Bytes)
     if Debug: debugPacket(Packet)
 
