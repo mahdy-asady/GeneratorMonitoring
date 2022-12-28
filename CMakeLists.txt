@@ -55,11 +55,34 @@ set(CMAKE_RUNTIME_OUTPUT_DIRECTORY "${CMAKE_SOURCE_DIR}/build")
 
 # Project setup
 set(INC_FILES src/app/main.c
+              src/mcu/stm32f103c8/gpio.c
               src/mcu/stm32f103c8/clock.c
+              src/mcu/stm32f103c8/usart.c
 
+              src/shared/fifo/fifo.c
+              src/shared/esp/esp.c
+              src/shared/string/string.c
+              src/shared/retarget/retarget.c
+
+              src/mcu/stm32f103c8/stm32f1xx_hal_msp.c
+              src/mcu/stm32f103c8/stm32f1xx_it.c
+
+              src/mcu/stm32f103c8/HAL_Driver/Src/stm32f1xx_hal_gpio_ex.c
+              src/mcu/stm32f103c8/HAL_Driver/Src/stm32f1xx_hal_tim.c
+              src/mcu/stm32f103c8/HAL_Driver/Src/stm32f1xx_hal_tim_ex.c
               src/mcu/stm32f103c8/HAL_Driver/Src/stm32f1xx_hal.c
               src/mcu/stm32f103c8/HAL_Driver/Src/stm32f1xx_hal_rcc.c
+              src/mcu/stm32f103c8/HAL_Driver/Src/stm32f1xx_hal_rcc_ex.c
+              src/mcu/stm32f103c8/HAL_Driver/Src/stm32f1xx_hal_gpio.c
+              src/mcu/stm32f103c8/HAL_Driver/Src/stm32f1xx_hal_dma.c
               src/mcu/stm32f103c8/HAL_Driver/Src/stm32f1xx_hal_cortex.c
+
+              src/mcu/stm32f103c8/HAL_Driver/Src/stm32f1xx_hal_pwr.c
+              src/mcu/stm32f103c8/HAL_Driver/Src/stm32f1xx_hal_flash.c
+              src/mcu/stm32f103c8/HAL_Driver/Src/stm32f1xx_hal_flash_ex.c
+              src/mcu/stm32f103c8/HAL_Driver/Src/stm32f1xx_hal_exti.c
+              src/mcu/stm32f103c8/HAL_Driver/Src/stm32f1xx_hal_uart.c
+
               src/mcu/stm32f103c8/system_stm32f1xx.c
               src/mcu/stm32f103c8/startup_stm32f103xb.s
 )
@@ -88,7 +111,6 @@ add_custom_target(flash JFlash -openprj../src/mcu/stm32f103c8/device/jlink.jflas
 
 
 target_include_directories(${PROJECT_NAME} PUBLIC "src/mcu/stm32f103c8")
-target_include_directories(${PROJECT_NAME} PUBLIC "src/mcu/stm32f103c8/HAL_Driver")
 target_include_directories(${PROJECT_NAME} PUBLIC "src/mcu/stm32f103c8/HAL_Driver/Inc")
 target_include_directories(${PROJECT_NAME} PUBLIC "src/mcu/stm32f103c8/HAL_Driver/Inc/Legacy")
 target_include_directories(${PROJECT_NAME} PUBLIC "src/mcu/stm32f103c8/CMSIS/Device/ST/STM32F1xx/Include")

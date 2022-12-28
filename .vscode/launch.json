@@ -13,12 +13,12 @@
             "runToEntryPoint": "main",
             "servertype": "jlink",
             "serverpath": "/usr/bin/JLinkGDBServerCLExe", 
-            "device": "STM32F107VC",
+            "device": "STM32F103C8",
             "interface": "swd",
             "serialNumber": "", //If you have more than one J-Link probe, add the serial number here.
             "runToMain": true,
             "armToolchainPath": "/opt/gcc-arm-none-eabi/bin/",
-            "svdFile": "${workspaceRoot}src/mcu/stm32f103c8/device/STM32F103.svd",
+            "svdFile": "${workspaceRoot}/src/mcu/stm32f103c8/device/STM32F103.svd",
             "showDevDebugOutput": "raw"
         }
     ]
