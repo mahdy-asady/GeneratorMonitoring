@@ -123,3 +123,10 @@ uint16_t usartReadLine(usartHandle *handle, char *Buffer, uint16_t MaxSize, uint
     }
     return Size;
 }
+
+void usartFlushBuffer(usartHandle *handle) {
+    while(!fifoIsEmpty(&handle->buffer)) {
+        uint8_t tmpBuffer;
+        usartRead(handle, &tmpBuffer, 1, 0);
+    }
+}
