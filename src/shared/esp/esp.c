@@ -63,3 +63,26 @@ bool espWifiConnect(char *SSID, char *Password) {
 
     return true;
 }
+
+void espStartPassThroughUDP(char *ServerAddress, uint16_t ServerPort, uint16_t LocalPort) {
+    char CommandString[100], ServerPortStr[6], LocalPortStr[6];
+    debugInfo("Start passthrough mode...");
+    
+    SendCommand("AT+CIPMODE=1");
+    SendCommand("AT+CIPRECVMODE=1");
+
+    strConcat(CommandString, 100, 7, "AT+CIPSTART=\"UDP\",\"", ServerAddress, "\",", num2Str(ServerPort, ServerPortStr), ",", num2Str(LocalPort, LocalPortStr), ",0");
+    SendCommand(CommandString);
+
+    SendCommand("AT+CIPSEND");
+
+    HAL_Delay(200);
+}
+
+void espStopPassThroughUDP() {
+    HAL_Delay(200);
+    usartWrite(Connection, "+++", 3);
+    HAL_Delay(1000);
+
+    debugInfo("UDP passthrough stopped.");
+}

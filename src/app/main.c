@@ -24,6 +24,9 @@ int main(void) {
 
     espInit(&usartESP, GPIOB, GPIO_PIN_8);
     espWifiConnect("esp32", "123456789");
+    espStartPassThroughUDP("192.168.11.157", 4000, 4000);
+    usartWrite(&usartESP, "012345678901234567890123456789012345", 36);
+    espStopPassThroughUDP();
 
     while(1){
         HAL_Delay(500);

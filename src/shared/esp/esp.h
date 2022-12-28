@@ -8,5 +8,8 @@ void espInit(usartHandle *handle, GPIO_TypeDef *ResetGPIO, uint16_t ResetPin);
 
 bool espWifiConnect(char *SSID, char *Password);
 
+void espStartPassThroughUDP(char *ServerAddress, uint16_t ServerPort, uint16_t LocalPort);
+
+void espStopPassThroughUDP();
 
 #endif
