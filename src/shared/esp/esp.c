@@ -12,7 +12,6 @@ int SendCommandAndWait(char *cmd, uint32_t Timeout) {
     while ((HAL_GetTick() - Holder) <= Timeout)
     {
         usartReadLine(Connection, strBuffer, ESP_RESPONSE_BUFFER_LENGTH, Timeout);
-        printf("%s\n", strBuffer);
 
         if(strCompare(strBuffer, "ERROR") == 0)
             return 0;
