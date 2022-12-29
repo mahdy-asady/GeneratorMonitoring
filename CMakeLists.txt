@@ -58,6 +58,9 @@ set(INC_FILES src/app/main.c
               src/mcu/stm32f103c8/gpio.c
               src/mcu/stm32f103c8/clock.c
               src/mcu/stm32f103c8/usart.c
+              src/mcu/stm32f103c8/i2c.c
+
+              src/drivers/htu21/rht.c
 
               src/shared/fifo/fifo.c
               src/shared/esp/esp.c
@@ -82,6 +85,7 @@ set(INC_FILES src/app/main.c
               src/mcu/stm32f103c8/HAL_Driver/Src/stm32f1xx_hal_flash_ex.c
               src/mcu/stm32f103c8/HAL_Driver/Src/stm32f1xx_hal_exti.c
               src/mcu/stm32f103c8/HAL_Driver/Src/stm32f1xx_hal_uart.c
+              src/mcu/stm32f103c8/HAL_Driver/Src/stm32f1xx_hal_i2c.c
 
               src/mcu/stm32f103c8/system_stm32f1xx.c
               src/mcu/stm32f103c8/startup_stm32f103xb.s
@@ -116,6 +120,7 @@ target_include_directories(${PROJECT_NAME} PUBLIC "src/mcu/stm32f103c8/HAL_Drive
 target_include_directories(${PROJECT_NAME} PUBLIC "src/mcu/stm32f103c8/CMSIS/Device/ST/STM32F1xx/Include")
 target_include_directories(${PROJECT_NAME} PUBLIC "src/mcu/stm32f103c8/CMSIS/Include")
 target_include_directories(${PROJECT_NAME} PUBLIC "src/peripherals")
+target_include_directories(${PROJECT_NAME} PUBLIC "src/drivers")
 target_include_directories(${PROJECT_NAME} PUBLIC "src/shared")
 
 set_directory_properties(PROPERTIES ADDITIONAL_MAKE_CLEAN_FILES "${PROJECT_NAME}.hex;${PROJECT_NAME}.eeprom;${PROJECT_NAME}.lst")

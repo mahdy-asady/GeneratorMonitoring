@@ -12,4 +12,6 @@
 
 #define ESP_AP_CONNECTION_DELAY         5000
 
+#define I2C_TIMEOUT                     50
+
 #endif

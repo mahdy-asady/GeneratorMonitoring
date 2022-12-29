@@ -4,7 +4,9 @@
 #include "gpio.h"
 #include "clock.h"
 #include "usart.h"
+#include "i2c.h"
 #include "esp/esp.h"
+#include "rht.h"
 
 
 enum MessageTypes {
@@ -25,10 +27,14 @@ int main(void) {
 
     usartHandle usartESP = {0},
                 usartDebug = {0};
+    
+    I2C_HandleTypeDef i2cHandler = {0};
 
     usartInit(&usartESP, USART1, 115200);
     usartInit(&usartDebug, USART2, 115200);
     usartEnableDebug(&usartDebug);
+
+    i2cInit(&i2cHandler, I2C1);
 
     printf("Board Start!!!\n");
 
@@ -47,6 +53,10 @@ int main(void) {
         if(usartRead(&usartESP, (uint8_t *)&ReceptionBuffer, 2, 500)) {
             printf("Message received: %d, %d\n", ReceptionBuffer.MessageType, ReceptionBuffer.Data);
         }
+        
+        printf("Temperature data: %d\n", rhtReadTemerature(&i2cHandler));
+        printf("Humidity data: %d\n", rhtReadHumidity(&i2cHandler));
+
         gpioToggleHealthLED();
     }
 }
