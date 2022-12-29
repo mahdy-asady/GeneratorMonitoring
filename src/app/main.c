@@ -37,9 +37,6 @@ int main(void) {
 
     espWifiConnect("esp32", "123456789");
     espStartPassThroughUDP("192.168.11.157", 4000, 4000);
-
-    //empty usart buffer
-    usartFlushBuffer(&usartESP);
     
     //just a test
     usartWrite(&usartESP, (uint8_t *)"012345678901234567890123456789012345", 36);

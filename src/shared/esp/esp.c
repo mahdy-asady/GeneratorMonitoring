@@ -76,6 +76,9 @@ void espStartPassThroughUDP(char *ServerAddress, uint16_t ServerPort, uint16_t L
     SendCommand("AT+CIPSEND");
 
     HAL_Delay(200);
+
+    //empty usart buffer
+    usartFlushBuffer(Connection);
 }
 
 void espStopPassThroughUDP(void) {
