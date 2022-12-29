@@ -58,6 +58,7 @@ set(INC_FILES src/app/main.c
               src/mcu/stm32f103c8/gpio.c
               src/mcu/stm32f103c8/clock.c
               src/mcu/stm32f103c8/usart.c
+              src/mcu/stm32f103c8/i2c.c
 
               src/shared/fifo/fifo.c
               src/shared/esp/esp.c
@@ -82,6 +83,7 @@ set(INC_FILES src/app/main.c
               src/mcu/stm32f103c8/HAL_Driver/Src/stm32f1xx_hal_flash_ex.c
               src/mcu/stm32f103c8/HAL_Driver/Src/stm32f1xx_hal_exti.c
               src/mcu/stm32f103c8/HAL_Driver/Src/stm32f1xx_hal_uart.c
+              src/mcu/stm32f103c8/HAL_Driver/Src/stm32f1xx_hal_i2c.c
 
               src/mcu/stm32f103c8/system_stm32f1xx.c
               src/mcu/stm32f103c8/startup_stm32f103xb.s
