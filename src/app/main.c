@@ -1,8 +1,8 @@
 #include <stdio.h>
 
+#include "board.h"
+
 #include "stm32f1xx_hal.h"
-#include "gpio.h"
-#include "clock.h"
 #include "usart.h"
 #include "i2c.h"
 #include "esp/esp.h"
@@ -21,29 +21,22 @@ typedef struct {
 
 /* Main routine*/
 int main(void) {
-    HAL_Init();
-    clockConfig();
-    gpioInit();
-
     usartHandle usartESP = {0},
                 usartDebug = {0};
     
     I2C_HandleTypeDef i2cHandler = {0};
+    
+    boardInit();
+    boardInitUsartDebug(&usartDebug);
 
-    usartInit(&usartESP, USART1, 115200);
-    usartInit(&usartDebug, USART2, 115200);
-    usartEnableDebug(&usartDebug);
+    printf("\n\nBoard Start!!!\n");
 
-    i2cInit(&i2cHandler, I2C1);
+    boardInitUsartEsp(&usartESP);
+    boardInitI2C(&i2cHandler);
+    boardInitEsp(&usartESP);
 
-    printf("Board Start!!!\n");
-
-    espInit(&usartESP, GPIOB, GPIO_PIN_8);
     espWifiConnect("esp32", "123456789");
     espStartPassThroughUDP("192.168.11.157", 4000, 4000);
-
-    //empty usart buffer
-    usartFlushBuffer(&usartESP);
     
     //just a test
     usartWrite(&usartESP, (uint8_t *)"012345678901234567890123456789012345", 36);
@@ -57,6 +50,6 @@ int main(void) {
         printf("Temperature data: %d\n", rhtReadTemerature(&i2cHandler));
         printf("Humidity data: %d\n", rhtReadHumidity(&i2cHandler));
 
-        gpioToggleHealthLED();
+        boardToggleHealthLED();
     }
 }

@@ -55,7 +55,9 @@ set(CMAKE_RUNTIME_OUTPUT_DIRECTORY "${CMAKE_SOURCE_DIR}/build")
 
 # Project setup
 set(INC_FILES src/app/main.c
-              src/mcu/stm32f103c8/gpio.c
+
+              src/boards/bluepill/board.c
+              
               src/mcu/stm32f103c8/clock.c
               src/mcu/stm32f103c8/usart.c
               src/mcu/stm32f103c8/i2c.c
@@ -119,6 +121,7 @@ target_include_directories(${PROJECT_NAME} PUBLIC "src/mcu/stm32f103c8/HAL_Drive
 target_include_directories(${PROJECT_NAME} PUBLIC "src/mcu/stm32f103c8/HAL_Driver/Inc/Legacy")
 target_include_directories(${PROJECT_NAME} PUBLIC "src/mcu/stm32f103c8/CMSIS/Device/ST/STM32F1xx/Include")
 target_include_directories(${PROJECT_NAME} PUBLIC "src/mcu/stm32f103c8/CMSIS/Include")
+target_include_directories(${PROJECT_NAME} PUBLIC "src/boards")
 target_include_directories(${PROJECT_NAME} PUBLIC "src/peripherals")
 target_include_directories(${PROJECT_NAME} PUBLIC "src/drivers")
 target_include_directories(${PROJECT_NAME} PUBLIC "src/shared")
