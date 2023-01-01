@@ -25,6 +25,8 @@ int main(void) {
                 usartDebug = {0};
     
     I2C_HandleTypeDef i2cHandler = {0};
+
+    TIM_HandleTypeDef timerHandler = {0};
     
     boardInit();
     boardInitUsartDebug(&usartDebug);
@@ -34,6 +36,7 @@ int main(void) {
     boardInitUsartEsp(&usartESP);
     boardInitI2C(&i2cHandler);
     boardInitEsp(&usartESP);
+    boardInitTimer(&timerHandler);
 
     espWifiConnect("esp32", "123456789");
     espStartPassThroughUDP("192.168.11.157", 4000, 4000);

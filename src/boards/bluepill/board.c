@@ -2,6 +2,7 @@
 
 #include "board.h"
 #include "clock.h"
+#include "timer.h"
 #include "esp/esp.h"
 
 
@@ -48,6 +49,11 @@ void boardInitI2C(I2C_HandleTypeDef *i2cHandler) {
 
 void boardInitEsp(usartHandle *usartHandler) {
     espInit(usartHandler, GPIOB, GPIO_PIN_8);
+}
+
+void boardInitTimer(TIM_HandleTypeDef *timerHandler) {
+    timerInit(timerHandler, TIM2);
+    HAL_TIM_IC_Start_IT(timerHandler, TIM_CHANNEL_1);
 }
 
 void boardToggleHealthLED(void) {

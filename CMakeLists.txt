@@ -59,6 +59,7 @@ set(INC_FILES src/app/main.c
               src/boards/bluepill/board.c
               
               src/mcu/stm32f103c8/clock.c
+              src/mcu/stm32f103c8/timer.c
               src/mcu/stm32f103c8/usart.c
               src/mcu/stm32f103c8/i2c.c
 

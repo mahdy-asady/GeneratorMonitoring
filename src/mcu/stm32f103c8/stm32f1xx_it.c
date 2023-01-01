@@ -58,6 +58,7 @@
 
 /* External variables --------------------------------------------------------*/
 extern usartHandle *usartHandlers[USART_COUNT];
+extern TIM_HandleTypeDef *timerHandler;
 /* USER CODE BEGIN EV */
 
 /* USER CODE END EV */
@@ -199,6 +200,21 @@ void SysTick_Handler(void)
 /* For the available peripheral interrupt handler names,                      */
 /* please refer to the startup file (startup_stm32f1xx.s).                    */
 /******************************************************************************/
+
+/**
+  * @brief This function handles TIM2 global interrupt.
+  */
+void TIM2_IRQHandler(void)
+{
+  /* USER CODE BEGIN TIM2_IRQn 0 */
+
+  /* USER CODE END TIM2_IRQn 0 */
+  HAL_TIM_IRQHandler(timerHandler);
+  /* USER CODE BEGIN TIM2_IRQn 1 */
+
+  /* USER CODE END TIM2_IRQn 1 */
+}
+
 
 /**
   * @brief This function handles USART1 global interrupt.
