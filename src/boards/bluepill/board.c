@@ -53,7 +53,7 @@ void boardInitEsp(usartHandle *usartHandler) {
 
 void boardInitTimer(TIM_HandleTypeDef *timerHandler) {
     timerInit(timerHandler, TIM2);
-    HAL_TIM_IC_Start_IT(timerHandler, TIM_CHANNEL_1);
+    timer_IC_Init(timerHandler, TIM_CHANNEL_1);
 }
 
 void boardToggleHealthLED(void) {

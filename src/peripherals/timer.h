@@ -5,4 +5,6 @@
 
 void timerInit(TIM_HandleTypeDef *tHandler, TIM_TypeDef *Timer);
 
+void timer_IC_Init(TIM_HandleTypeDef *tHandler, uint32_t timerChannel);
+
 #endif
