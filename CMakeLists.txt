@@ -64,6 +64,7 @@ set(INC_FILES src/app/main.c
               src/mcu/stm32f103c8/i2c.c
 
               src/drivers/htu21/rht.c
+              src/drivers/rpm.c
 
               src/shared/fifo/fifo.c
               src/shared/esp/esp.c
