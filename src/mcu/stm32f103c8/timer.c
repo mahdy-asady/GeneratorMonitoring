@@ -3,13 +3,15 @@
 #include "board.h"
 
 TIM_HandleTypeDef *timerHandler;
+void (*Timer1CH1Callback)(uint16_t);
+
 
 void timerInit(TIM_HandleTypeDef *tHandler, TIM_TypeDef *Timer) {
     TIM_ClockConfigTypeDef sClockSourceConfig = {0};
     TIM_MasterConfigTypeDef sMasterConfig = {0};
 
     tHandler->Instance = Timer;
-    tHandler->Init.Prescaler = 36000-1;
+    tHandler->Init.Prescaler = 7200-1;
     tHandler->Init.CounterMode = TIM_COUNTERMODE_UP;
     tHandler->Init.Period = 65535;
     tHandler->Init.ClockDivision = TIM_CLOCKDIVISION_DIV1;
@@ -32,7 +34,7 @@ void timerInit(TIM_HandleTypeDef *tHandler, TIM_TypeDef *Timer) {
 }
 
 
-void timer_IC_Init(TIM_HandleTypeDef *tHandler, uint32_t timerChannel) {
+void timer_IC_Init(TIM_HandleTypeDef *tHandler, uint32_t timerChannel, void (*callBack)(uint16_t)) {
     if (HAL_TIM_IC_Init(tHandler) != HAL_OK) {
         debugFatal("Error Config TIMER!");
     }
@@ -48,10 +50,11 @@ void timer_IC_Init(TIM_HandleTypeDef *tHandler, uint32_t timerChannel) {
     }
 
     HAL_TIM_IC_Start_IT(timerHandler, timerChannel);
+    Timer1CH1Callback = callBack;
 }
 
 
 void HAL_TIM_IC_CaptureCallback(TIM_HandleTypeDef *tHandler) {
-    if(tHandler->Channel == HAL_TIM_ACTIVE_CHANNEL_1)
-        printf("Got pulse at: %ld\n", HAL_TIM_ReadCapturedValue(tHandler, TIM_CHANNEL_1));
+    if(tHandler->Channel == HAL_TIM_ACTIVE_CHANNEL_1) {}
+        Timer1CH1Callback(HAL_TIM_ReadCapturedValue(tHandler, TIM_CHANNEL_1));
 }

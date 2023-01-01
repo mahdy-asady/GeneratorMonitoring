@@ -51,9 +51,17 @@ void boardInitEsp(usartHandle *usartHandler) {
     espInit(usartHandler, GPIOB, GPIO_PIN_8);
 }
 
+uint16_t prevTick;
+#include <stdio.h>
+void getMotorPulse(uint16_t PulseTick) {
+    uint16_t duration = PulseTick - prevTick;
+    prevTick = PulseTick;
+    printf("Got pulse at: %d \tRPM: %d\n", duration,  60 * 10000 / duration);
+}
+
 void boardInitTimer(TIM_HandleTypeDef *timerHandler) {
     timerInit(timerHandler, TIM2);
-    timer_IC_Init(timerHandler, TIM_CHANNEL_1);
+    timer_IC_Init(timerHandler, TIM_CHANNEL_1, &getMotorPulse);
 }
 
 void boardToggleHealthLED(void) {
