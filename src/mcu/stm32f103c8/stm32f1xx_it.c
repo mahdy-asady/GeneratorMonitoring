@@ -58,7 +58,7 @@
 
 /* External variables --------------------------------------------------------*/
 extern usartHandle *usartHandlers[USART_COUNT];
-extern TIM_HandleTypeDef *timerHandler;
+extern TIM_HandleTypeDef *timerHandler[4];
 /* USER CODE BEGIN EV */
 
 /* USER CODE END EV */
@@ -209,7 +209,7 @@ void TIM2_IRQHandler(void)
   /* USER CODE BEGIN TIM2_IRQn 0 */
 
   /* USER CODE END TIM2_IRQn 0 */
-  HAL_TIM_IRQHandler(timerHandler);
+  HAL_TIM_IRQHandler(timerHandler[1]);
   /* USER CODE BEGIN TIM2_IRQn 1 */
 
   /* USER CODE END TIM2_IRQn 1 */
