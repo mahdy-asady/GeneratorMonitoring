@@ -20,4 +20,9 @@ void boardInitTimer(TIM_HandleTypeDef *timerHandler);
 
 void boardToggleHealthLED(void);
 
+uint8_t boardReadDigit1(void);
+
+uint8_t boardReadDigit2(void);
+
+
 #endif

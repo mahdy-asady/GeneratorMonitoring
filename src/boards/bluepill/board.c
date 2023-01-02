@@ -15,6 +15,12 @@ void boardGpioInit(void) {
 
 
     GPIO_InitTypeDef GPIO_InitStruct = {0};
+
+    /*Configure GPIO pins : PB4 PB5 */
+    GPIO_InitStruct.Pin = GPIO_PIN_4|GPIO_PIN_5;
+    GPIO_InitStruct.Mode = GPIO_MODE_INPUT;
+    GPIO_InitStruct.Pull = GPIO_PULLDOWN;
+    HAL_GPIO_Init(GPIOB, &GPIO_InitStruct);
     
     /*  Pin B9: Health LED
         Pin B8: ESP Reset
@@ -59,4 +65,12 @@ void boardInitTimer(TIM_HandleTypeDef *timerHandler) {
 
 void boardToggleHealthLED(void) {
     HAL_GPIO_TogglePin(GPIOB, GPIO_PIN_9);
+}
+
+uint8_t boardReadDigit1(void) {
+    return HAL_GPIO_ReadPin(GPIOB, GPIO_PIN_4);
+}
+
+uint8_t boardReadDigit2(void) {
+    return HAL_GPIO_ReadPin(GPIOB, GPIO_PIN_5);
 }

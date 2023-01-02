@@ -53,6 +53,8 @@ int main(void) {
         printf("Temperature data: %d\n", rhtReadTemerature(&i2cHandler));
         printf("Humidity data: %d\n", rhtReadHumidity(&i2cHandler));
 
+        printf("Buttons: %d, %d\n\n", boardReadDigit1(), boardReadDigit2());
+
         boardToggleHealthLED();
     }
 }
