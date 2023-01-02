@@ -54,6 +54,8 @@ int main(void) {
         printf("Temperature data: %d\n", rhtReadTemerature(&i2cHandler));
         printf("Humidity data: %d\n", rhtReadHumidity(&i2cHandler));
 
+        printf("Buttons: %d, %d\n\n", boardReadDigit1(), boardReadDigit2());
+        
         printf("Gyro:\tX: %d\tY:%d\tZ:%d",  MotionTrackingReadGyroX(&i2cHandler), 
                                             MotionTrackingReadGyroY(&i2cHandler), 
                                             MotionTrackingReadGyroZ(&i2cHandler));
