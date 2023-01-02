@@ -5,6 +5,7 @@
 #include "timer.h"
 #include "esp/esp.h"
 #include "rpm.h"
+#include "MotionTracking.h"
 
 
 void boardGpioInit(void) {
@@ -46,6 +47,7 @@ void boardInitUsartDebug(usartHandle *usartHandler) {
 
 void boardInitI2C(I2C_HandleTypeDef *i2cHandler) {
     i2cInit(i2cHandler, I2C1);
+    MotionTrackingInit(i2cHandler);
 }
 
 void boardInitEsp(usartHandle *usartHandler) {
