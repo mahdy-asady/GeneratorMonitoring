@@ -12,4 +12,10 @@ bool i2cWrite(I2C_HandleTypeDef *i2cHandler, uint8_t deviceAddress, uint8_t *dat
 bool i2cRead(I2C_HandleTypeDef *i2cHandler, uint8_t deviceAddress, uint8_t *data, size_t length);
 
 
+
+bool i2cWriteMemory(I2C_HandleTypeDef *i2cHandler, uint8_t deviceAddress, uint8_t memoryAddress, uint8_t *data, size_t length);
+
+bool i2cReadMemory(I2C_HandleTypeDef *i2cHandler, uint8_t deviceAddress, uint8_t memoryAddress, uint8_t *data, size_t length);
+
+
 #endif
