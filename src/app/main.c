@@ -39,8 +39,6 @@ int main(void) {
     boardInitEsp(&usartESP);
     boardInitTimer(&timerHandler);
 
-    MotionTrackingInit(&i2cHandler);
-
     espWifiConnect("esp32", "123456789");
     espStartPassThroughUDP("192.168.11.157", 4000, 4000);
     
