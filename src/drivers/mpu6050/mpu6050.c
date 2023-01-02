@@ -57,11 +57,6 @@ int16_t MotionTrackingReadAccZ(I2C_HandleTypeDef *i2cHandler) {
 
 int16_t mpu6050ReadRegister(I2C_HandleTypeDef *i2cHandler, uint8_t registerAddr) {
     uint8_t i2cResult[2];
-    
-    /*if(!i2cWrite(i2cHandler, MPU6050_ADDR, &registerAddr, 1)) {
-        debugError("I2C Write Error on RTH");
-        return 0;
-    }*/
 
     if(!i2cReadMemory(i2cHandler, MPU6050_ADDR, registerAddr, i2cResult, 2)) {
         debugError("I2C Read Error on MotionTracking");
