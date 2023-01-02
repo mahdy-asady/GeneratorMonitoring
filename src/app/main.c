@@ -7,6 +7,7 @@
 #include "i2c.h"
 #include "esp/esp.h"
 #include "rht.h"
+#include "MotionTracking.h"
 
 
 enum MessageTypes {
@@ -38,6 +39,8 @@ int main(void) {
     boardInitEsp(&usartESP);
     boardInitTimer(&timerHandler);
 
+    MotionTrackingInit(&i2cHandler);
+
     espWifiConnect("esp32", "123456789");
     espStartPassThroughUDP("192.168.11.157", 4000, 4000);
     
@@ -52,6 +55,14 @@ int main(void) {
         
         printf("Temperature data: %d\n", rhtReadTemerature(&i2cHandler));
         printf("Humidity data: %d\n", rhtReadHumidity(&i2cHandler));
+
+        printf("Gyro:\tX: %d\tY:%d\tZ:%d",  MotionTrackingReadGyroX(&i2cHandler), 
+                                            MotionTrackingReadGyroY(&i2cHandler), 
+                                            MotionTrackingReadGyroZ(&i2cHandler));
+
+        printf("\t\tAccel:\tX: %d\tY:%d\tZ:%d\n",  MotionTrackingReadAccX(&i2cHandler), 
+                                             MotionTrackingReadAccY(&i2cHandler), 
+                                             MotionTrackingReadAccZ(&i2cHandler));
 
         boardToggleHealthLED();
     }

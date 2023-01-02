@@ -33,3 +33,19 @@ bool i2cRead(I2C_HandleTypeDef *i2cHandler, uint8_t deviceAddress, uint8_t *data
     else
         return false;
 }
+
+
+
+bool i2cWriteMemory(I2C_HandleTypeDef *i2cHandler, uint8_t deviceAddress, uint8_t memoryAddress, uint8_t *data, size_t length) {
+    if (HAL_I2C_Mem_Write(i2cHandler, deviceAddress << 1, memoryAddress, I2C_MEMADD_SIZE_8BIT, data, length, I2C_TIMEOUT) == HAL_OK)
+        return true;
+    else
+        return false;
+}
+
+bool i2cReadMemory(I2C_HandleTypeDef *i2cHandler, uint8_t deviceAddress, uint8_t memoryAddress, uint8_t *data, size_t length) {
+    if(HAL_I2C_Mem_Read(i2cHandler, deviceAddress << 1, memoryAddress, I2C_MEMADD_SIZE_8BIT, data, length, I2C_TIMEOUT) == HAL_OK)
+        return true;
+    else
+        return false;
+}
