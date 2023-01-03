@@ -14,4 +14,6 @@
 
 #define I2C_TIMEOUT                     50
 
+#define ADC_TIMEOUT                     50
+
 #endif

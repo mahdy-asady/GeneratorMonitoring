@@ -62,6 +62,7 @@ set(INC_FILES src/app/main.c
               src/mcu/stm32f103c8/timer.c
               src/mcu/stm32f103c8/usart.c
               src/mcu/stm32f103c8/i2c.c
+              src/mcu/stm32f103c8/adc.c
 
               src/drivers/htu21/rht.c
               src/drivers/mpu6050/mpu6050.c
@@ -84,7 +85,8 @@ set(INC_FILES src/app/main.c
               src/mcu/stm32f103c8/HAL_Driver/Src/stm32f1xx_hal_gpio.c
               src/mcu/stm32f103c8/HAL_Driver/Src/stm32f1xx_hal_dma.c
               src/mcu/stm32f103c8/HAL_Driver/Src/stm32f1xx_hal_cortex.c
-
+              src/mcu/stm32f103c8/HAL_Driver/Src/stm32f1xx_hal_adc.c
+              src/mcu/stm32f103c8/HAL_Driver/Src/stm32f1xx_hal_adc_ex.c
               src/mcu/stm32f103c8/HAL_Driver/Src/stm32f1xx_hal_pwr.c
               src/mcu/stm32f103c8/HAL_Driver/Src/stm32f1xx_hal_flash.c
               src/mcu/stm32f103c8/HAL_Driver/Src/stm32f1xx_hal_flash_ex.c

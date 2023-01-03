@@ -18,6 +18,8 @@ void boardInitEsp(usartHandle *usartHandler);
 
 void boardInitTimer(TIM_HandleTypeDef *timerHandler);
 
+void boardInitADC(ADC_HandleTypeDef *adcHandler);
+
 void boardToggleHealthLED(void);
 
 uint8_t boardReadDigit1(void);
