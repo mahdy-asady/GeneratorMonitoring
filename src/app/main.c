@@ -29,15 +29,13 @@ int main(void) {
     I2C_HandleTypeDef i2cHandler = {0};
 
     TIM_HandleTypeDef timerHandler = {0};
-
-    ADC_HandleTypeDef adcHandler = {0};
     
     boardInit();
     boardInitUsartDebug(&usartDebug);
 
     printf("\n\nBoard Start!!!\n");
 
-    boardInitADC(&adcHandler);
+    boardInitADC();
     boardInitUsartEsp(&usartESP);
     boardInitI2C(&i2cHandler);
     boardInitEsp(&usartESP);
@@ -68,7 +66,7 @@ int main(void) {
                                              MotionTrackingReadAccY(&i2cHandler), 
                                              MotionTrackingReadAccZ(&i2cHandler));
 */
-        printf("ADC: %d\n", adcRead(&adcHandler));
         boardToggleHealthLED();
+        HAL_Delay(500);
     }
 }

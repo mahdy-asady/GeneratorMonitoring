@@ -67,6 +67,8 @@ set(INC_FILES src/app/main.c
               src/drivers/htu21/rht.c
               src/drivers/mpu6050/mpu6050.c
               src/drivers/rpm.c
+              src/drivers/generator/generator.c
+
 
               src/shared/fifo/fifo.c
               src/shared/esp/esp.c

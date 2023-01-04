@@ -18,7 +18,7 @@ void boardInitEsp(usartHandle *usartHandler);
 
 void boardInitTimer(TIM_HandleTypeDef *timerHandler);
 
-void boardInitADC(ADC_HandleTypeDef *adcHandler);
+void boardInitADC(void);
 
 void boardToggleHealthLED(void);
 
