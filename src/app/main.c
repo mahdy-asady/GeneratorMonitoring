@@ -8,6 +8,7 @@
 #include "esp/esp.h"
 #include "rht.h"
 #include "MotionTracking.h"
+#include "adc.h"
 
 
 enum MessageTypes {
@@ -46,7 +47,7 @@ int main(void) {
     usartWrite(&usartESP, (uint8_t *)"012345678901234567890123456789012345", 36);
 
     while(1){
-        ServerMessage ReceptionBuffer;
+        /*ServerMessage ReceptionBuffer;
         if(usartRead(&usartESP, (uint8_t *)&ReceptionBuffer, 2, 500)) {
             printf("Message received: %d, %d\n", ReceptionBuffer.MessageType, ReceptionBuffer.Data);
         }
@@ -63,7 +64,8 @@ int main(void) {
         printf("\t\tAccel:\tX: %d\tY:%d\tZ:%d\n",  MotionTrackingReadAccX(&i2cHandler), 
                                              MotionTrackingReadAccY(&i2cHandler), 
                                              MotionTrackingReadAccZ(&i2cHandler));
-
+*/
         boardToggleHealthLED();
+        HAL_Delay(500);
     }
 }

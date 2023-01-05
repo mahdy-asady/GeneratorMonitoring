@@ -6,6 +6,7 @@
 #include "esp/esp.h"
 #include "rpm.h"
 #include "MotionTracking.h"
+#include "generator.h"
 
 
 void boardGpioInit(void) {
@@ -62,7 +63,11 @@ void boardInitEsp(usartHandle *usartHandler) {
 
 void boardInitTimer(TIM_HandleTypeDef *timerHandler) {
     timerInit(timerHandler, TIM2);
-    timer_IC_Init(timerHandler, TIM_CHANNEL_1, &rpmPulseInterrupt);
+    
+    generatorInit(ADC1, ADC_CHANNEL_4, timerHandler, TIM_CHANNEL_2, TIM_CHANNEL_3);
+    
+    timerInputCaptureInit(timerHandler, TIM_CHANNEL_1, &rpmPulseInterrupt);
+    timerInputCaptureStart(timerHandler, TIM_CHANNEL_1);
 }
 
 void boardToggleHealthLED(void) {
