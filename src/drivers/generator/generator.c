@@ -17,7 +17,7 @@ void generatorReadVoltage(uint16_t timerPulse) {
 
 uint16_t generatorPreviousTick;
 void generatorZeroCrossInterrupt(uint16_t PulseTick) {
-    timerOutputCompareStart(gTimerHandler, voltageChannel);
+    timerOutputCompareStart(gTimerHandler, voltageChannel, PulseTick + 50);
 
     printf("Current: %d\tPrev: %d", PulseTick, generatorPreviousTick);
     uint16_t duration = PulseTick - generatorPreviousTick;

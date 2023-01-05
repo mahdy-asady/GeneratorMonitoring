@@ -104,26 +104,26 @@ void timerOutputCompareInit(TIM_HandleTypeDef *tHandler, uint32_t timerChannel, 
     {
         debugFatal("Error Config OC TIMER!");
     }
+    saveInterruptCallback(tHandler->Instance, timerChannel, callBack);
+}
+
+void timerOutputCompareStart(TIM_HandleTypeDef *tHandler, uint32_t timerChannel, uint16_t PulseTime) {
     TIM_OC_InitTypeDef sConfigOC = {0};
 
     sConfigOC.OCMode = TIM_OCMODE_TIMING;
-    sConfigOC.Pulse = 0;
+    sConfigOC.Pulse = PulseTime;
     sConfigOC.OCPolarity = TIM_OCPOLARITY_HIGH;
     sConfigOC.OCFastMode = TIM_OCFAST_DISABLE;
     if (HAL_TIM_OC_ConfigChannel(tHandler, &sConfigOC, timerChannel) != HAL_OK)
     {
         debugFatal("Error Config OC TIMER!");
     }
-
-    saveInterruptCallback(tHandler->Instance, timerChannel, callBack);
-}
-
-void timerOutputCompareStart(TIM_HandleTypeDef *tHandler, uint32_t timerChannel) {
+    
     HAL_TIM_OC_Start_IT(tHandler, timerChannel);
 }
 
 void timerOutputCompareStop(TIM_HandleTypeDef *tHandler, uint32_t timerChannel) {
-    HAL_TIM_OC_Stop(tHandler, timerChannel);
+    HAL_TIM_OC_Stop_IT(tHandler, timerChannel);
 }
 
 
