@@ -118,8 +118,24 @@ uint8_t findHalChannel(HAL_TIM_ActiveChannel ActiveChannel) {
     }
 }
 
+uint8_t findHalChannelIndex(HAL_TIM_ActiveChannel ActiveChannel) {
+    switch (ActiveChannel)
+    {
+        case HAL_TIM_ACTIVE_CHANNEL_1:
+            return 0; break;
+        case HAL_TIM_ACTIVE_CHANNEL_2:
+            return 1; break;
+        case HAL_TIM_ACTIVE_CHANNEL_3:
+            return 2; break;
+        case HAL_TIM_ACTIVE_CHANNEL_4:
+            return 3; break;
+        default:
+            debugFatal("Timer Channel index out of range!");
+    }
+}
+
 void HAL_TIM_IC_CaptureCallback(TIM_HandleTypeDef *tHandler) {
-    uint8_t interruptIndex = getTimerIndex(tHandler->Instance) * 4 + tHandler->Channel - 1;
+    uint8_t interruptIndex = getTimerIndex(tHandler->Instance) * 4 + findHalChannelIndex(tHandler->Channel);
     uint16_t ChannelValue = HAL_TIM_ReadCapturedValue(tHandler, findHalChannel(tHandler->Channel));
 
     TimerInterruptCallbacks[interruptIndex](ChannelValue);
