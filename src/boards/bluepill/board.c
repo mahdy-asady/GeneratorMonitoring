@@ -63,8 +63,8 @@ void boardInitEsp(usartHandle *usartHandler) {
 
 void boardInitTimer(TIM_HandleTypeDef *timerHandler) {
     timerInit(timerHandler, TIM2);
-    timer_IC_Init(timerHandler, TIM_CHANNEL_1, &rpmPulseInterrupt);
-    timer_IC_Init(timerHandler, TIM_CHANNEL_2, &generatorZeroCrossInterrupt);
+    timerInputCaptureInit(timerHandler, TIM_CHANNEL_1, &rpmPulseInterrupt);
+    timerInputCaptureInit(timerHandler, TIM_CHANNEL_2, &generatorZeroCrossInterrupt);
 }
 
 void boardInitADC(void) {

@@ -73,7 +73,7 @@ void saveInterruptCallback(TIM_TypeDef *timerInstance, uint32_t timerChannel, vo
     TimerInterruptCallbacks[interruptIndex] = callBack;
 }
 
-void timer_IC_Init(TIM_HandleTypeDef *tHandler, uint32_t timerChannel, void (*callBack)(uint16_t)) {
+void timerInputCaptureInit(TIM_HandleTypeDef *tHandler, uint32_t timerChannel, void (*callBack)(uint16_t)) {
     if (HAL_TIM_IC_Init(tHandler) != HAL_OK) {
         debugFatal("Error Config TIMER!");
     }
