@@ -1,3 +1,5 @@
+#include <stdio.h>
+
 #include "stm32f1xx_hal.h"
 #include "adc.h"
 #include "timer.h"
@@ -6,16 +8,13 @@ ADC_HandleTypeDef voltageAdcHandler;
 
 TIM_HandleTypeDef *gTimerHandler;
 uint32_t voltageChannel;
-
-
-#include <stdio.h>
+uint16_t generatorPreviousTick;
 
 void generatorReadVoltage(uint16_t timerPulse) {
     timerOutputCompareStop(gTimerHandler, voltageChannel);
     printf("%d\n", adcRead(&voltageAdcHandler));
 }
 
-uint16_t generatorPreviousTick;
 void generatorZeroCrossInterrupt(uint16_t PulseTick) {
     timerOutputCompareStart(gTimerHandler, voltageChannel, PulseTick + 50);
 

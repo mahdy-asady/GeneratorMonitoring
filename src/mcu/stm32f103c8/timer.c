@@ -161,14 +161,14 @@ uint8_t findHalChannelIndex(HAL_TIM_ActiveChannel ActiveChannel) {
 }
 
 void HAL_TIM_IC_CaptureCallback(TIM_HandleTypeDef *tHandler) {
-    uint8_t interruptIndex = getTimerIndex(tHandler->Instance) * 4 + findHalChannelIndex(tHandler->Channel);
+    uint8_t interruptIndex = (getTimerIndex(tHandler->Instance) * 4) + findHalChannelIndex(tHandler->Channel);
     uint16_t ChannelValue = HAL_TIM_ReadCapturedValue(tHandler, findHalChannel(tHandler->Channel));
 
     TimerInterruptCallbacks[interruptIndex](ChannelValue);
 }
 
 void HAL_TIM_OC_DelayElapsedCallback (TIM_HandleTypeDef *tHandler) {
-    uint8_t interruptIndex = getTimerIndex(tHandler->Instance) * 4 + findHalChannelIndex(tHandler->Channel);
+    uint8_t interruptIndex = (getTimerIndex(tHandler->Instance) * 4) + findHalChannelIndex(tHandler->Channel);
     uint16_t ChannelValue = HAL_TIM_ReadCapturedValue(tHandler, findHalChannel(tHandler->Channel));
 
     TimerInterruptCallbacks[interruptIndex](ChannelValue);
