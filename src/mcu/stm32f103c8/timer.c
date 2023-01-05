@@ -53,6 +53,25 @@ void timerInit(TIM_HandleTypeDef *tHandler, TIM_TypeDef *Timer) {
     timerHandler[getTimerIndex(Timer)] = tHandler;
 }
 
+void saveInterruptCallback(TIM_TypeDef *timerInstance, uint32_t timerChannel, void (*callBack)(uint16_t)) {
+    uint8_t channelIndex;
+    switch (timerChannel)
+    {
+        case TIM_CHANNEL_1:
+            channelIndex = 0; break;
+        case TIM_CHANNEL_2:
+            channelIndex = 1; break;
+        case TIM_CHANNEL_3:
+            channelIndex = 2; break;
+        case TIM_CHANNEL_4:
+            channelIndex = 3; break;
+        default:
+            debugFatal("Timer Channel index out of range!");
+    }
+    uint8_t interruptIndex = getTimerIndex(timerInstance) * 4 + channelIndex;
+
+    TimerInterruptCallbacks[interruptIndex] = callBack;
+}
 
 void timer_IC_Init(TIM_HandleTypeDef *tHandler, uint32_t timerChannel, void (*callBack)(uint16_t)) {
     if (HAL_TIM_IC_Init(tHandler) != HAL_OK) {
@@ -71,23 +90,7 @@ void timer_IC_Init(TIM_HandleTypeDef *tHandler, uint32_t timerChannel, void (*ca
 
     HAL_TIM_IC_Start_IT(tHandler, timerChannel);
 
-    uint8_t channelIndex;
-    switch (timerChannel)
-    {
-        case TIM_CHANNEL_1:
-            channelIndex = 0; break;
-        case TIM_CHANNEL_2:
-            channelIndex = 1; break;
-        case TIM_CHANNEL_3:
-            channelIndex = 2; break;
-        case TIM_CHANNEL_4:
-            channelIndex = 3; break;
-        default:
-            debugFatal("Timer Channel index out of range!");
-    }
-    uint8_t interruptIndex = getTimerIndex(tHandler->Instance) * 4 + channelIndex;
-
-    TimerInterruptCallbacks[interruptIndex] = callBack;
+    saveInterruptCallback(tHandler->Instance, timerChannel, callBack);
 }
 
 void HAL_TIM_IC_CaptureCallback(TIM_HandleTypeDef *tHandler) {
