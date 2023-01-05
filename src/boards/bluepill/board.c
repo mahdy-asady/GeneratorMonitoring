@@ -65,6 +65,9 @@ void boardInitTimer(TIM_HandleTypeDef *timerHandler) {
     timerInit(timerHandler, TIM2);
     timerInputCaptureInit(timerHandler, TIM_CHANNEL_1, &rpmPulseInterrupt);
     timerInputCaptureInit(timerHandler, TIM_CHANNEL_2, &generatorZeroCrossInterrupt);
+
+    timerInputCaptureStart(timerHandler, TIM_CHANNEL_1);
+    timerInputCaptureStart(timerHandler, TIM_CHANNEL_2);
 }
 
 void boardInitADC(void) {

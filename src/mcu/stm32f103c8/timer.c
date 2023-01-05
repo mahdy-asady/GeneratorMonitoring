@@ -88,9 +88,15 @@ void timerInputCaptureInit(TIM_HandleTypeDef *tHandler, uint32_t timerChannel, v
         debugFatal("Error Config TIMER!");
     }
 
-    HAL_TIM_IC_Start_IT(tHandler, timerChannel);
-
     saveInterruptCallback(tHandler->Instance, timerChannel, callBack);
+}
+
+void timerInputCaptureStart(TIM_HandleTypeDef *tHandler, uint32_t timerChannel) {
+    HAL_TIM_IC_Start_IT(tHandler, timerChannel);
+}
+
+void timerInputCaptureStop(TIM_HandleTypeDef *tHandler, uint32_t timerChannel) {
+    HAL_TIM_IC_Stop(tHandler, timerChannel);
 }
 
 void HAL_TIM_IC_CaptureCallback(TIM_HandleTypeDef *tHandler) {
