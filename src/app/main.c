@@ -35,7 +35,6 @@ int main(void) {
 
     printf("\n\nBoard Start!!!\n");
 
-    boardInitADC();
     boardInitUsartEsp(&usartESP);
     boardInitI2C(&i2cHandler);
     boardInitEsp(&usartESP);

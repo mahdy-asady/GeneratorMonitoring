@@ -63,18 +63,11 @@ void boardInitEsp(usartHandle *usartHandler) {
 
 void boardInitTimer(TIM_HandleTypeDef *timerHandler) {
     timerInit(timerHandler, TIM2);
+    
+    generatorInit(ADC1, ADC_CHANNEL_4, timerHandler, TIM_CHANNEL_2, TIM_CHANNEL_3);
+    
     timerInputCaptureInit(timerHandler, TIM_CHANNEL_1, &rpmPulseInterrupt);
-    timerInputCaptureInit(timerHandler, TIM_CHANNEL_2, &generatorZeroCrossInterrupt);
-
     timerInputCaptureStart(timerHandler, TIM_CHANNEL_1);
-    timerInputCaptureStart(timerHandler, TIM_CHANNEL_2);
-
-    timerOutputCompareInit(timerHandler, TIM_CHANNEL_3, &generatorReadVoltage);
-    timerOutputCompareStart(timerHandler, TIM_CHANNEL_3);
-}
-
-void boardInitADC(void) {
-    generatorInit(ADC1, ADC_CHANNEL_4);
 }
 
 void boardToggleHealthLED(void) {
