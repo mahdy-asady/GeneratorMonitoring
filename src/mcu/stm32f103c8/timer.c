@@ -99,6 +99,32 @@ void timerInputCaptureStop(TIM_HandleTypeDef *tHandler, uint32_t timerChannel) {
     HAL_TIM_IC_Stop(tHandler, timerChannel);
 }
 
+void timerOutputCompareInit(TIM_HandleTypeDef *tHandler, uint32_t timerChannel, void (*callBack)(uint16_t)) {
+    if (HAL_TIM_OC_Init(tHandler) != HAL_OK)
+    {
+        debugFatal("Error Config OC TIMER!");
+    }
+    TIM_OC_InitTypeDef sConfigOC = {0};
+
+    sConfigOC.OCMode = TIM_OCMODE_TIMING;
+    sConfigOC.Pulse = 0;
+    sConfigOC.OCPolarity = TIM_OCPOLARITY_HIGH;
+    sConfigOC.OCFastMode = TIM_OCFAST_DISABLE;
+    if (HAL_TIM_OC_ConfigChannel(tHandler, &sConfigOC, timerChannel) != HAL_OK)
+    {
+        debugFatal("Error Config OC TIMER!");
+    }
+
+    saveInterruptCallback(tHandler->Instance, timerChannel, callBack);
+}
+
+void timerOutputCompareStart(TIM_HandleTypeDef *tHandler, uint32_t timerChannel) {
+    HAL_TIM_OC_Start_IT(tHandler, timerChannel);
+}
+
+void timerOutputCompareStop(TIM_HandleTypeDef *tHandler, uint32_t timerChannel) {
+    HAL_TIM_OC_Stop(tHandler, timerChannel);
+}
 
 
 
@@ -135,6 +161,13 @@ uint8_t findHalChannelIndex(HAL_TIM_ActiveChannel ActiveChannel) {
 }
 
 void HAL_TIM_IC_CaptureCallback(TIM_HandleTypeDef *tHandler) {
+    uint8_t interruptIndex = getTimerIndex(tHandler->Instance) * 4 + findHalChannelIndex(tHandler->Channel);
+    uint16_t ChannelValue = HAL_TIM_ReadCapturedValue(tHandler, findHalChannel(tHandler->Channel));
+
+    TimerInterruptCallbacks[interruptIndex](ChannelValue);
+}
+
+void HAL_TIM_OC_DelayElapsedCallback (TIM_HandleTypeDef *tHandler) {
     uint8_t interruptIndex = getTimerIndex(tHandler->Instance) * 4 + findHalChannelIndex(tHandler->Channel);
     uint16_t ChannelValue = HAL_TIM_ReadCapturedValue(tHandler, findHalChannel(tHandler->Channel));
 

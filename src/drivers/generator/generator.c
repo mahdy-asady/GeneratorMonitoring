@@ -9,6 +9,11 @@ void generatorInit(ADC_TypeDef *ADC, uint32_t channel) {
 }
 
 #include <stdio.h>
+
+void generatorReadVoltage(uint16_t timerPulse) {
+    printf("%d\n", adcRead(&voltageAdcHandler));
+}
+
 uint16_t generatorPreviousTick;
 void generatorZeroCrossInterrupt(uint16_t PulseTick) {
     printf("Current: %d\tPrev: %d", PulseTick, generatorPreviousTick);

@@ -68,6 +68,9 @@ void boardInitTimer(TIM_HandleTypeDef *timerHandler) {
 
     timerInputCaptureStart(timerHandler, TIM_CHANNEL_1);
     timerInputCaptureStart(timerHandler, TIM_CHANNEL_2);
+
+    timerOutputCompareInit(timerHandler, TIM_CHANNEL_3, &generatorReadVoltage);
+    timerOutputCompareStart(timerHandler, TIM_CHANNEL_3);
 }
 
 void boardInitADC(void) {
