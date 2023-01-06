@@ -26,24 +26,16 @@ void measureTemperature(void) {
     printf("Humidity data: %d\n", rhtReadHumidity(sI2cHandler));
 }
 
-void measurePowerDetails(void) {
-
-}
-
 void senseTimerInterrupt(uint16_t counterPulse) {
     timerOutputCompareStart(sTimerHandler, senseChannel, counterPulse + 10);
 
-    if(++senseCounter == 1000)
+    if(++senseCounter == 65000)
         senseCounter = 0;
 
     measureGyro();
 
     if((senseCounter % 100) == 0) {
         measureTemperature();
-    }
-    
-    if((senseCounter % 10) == 0) {
-        measurePowerDetails();
     }
 }
 

@@ -4,7 +4,6 @@
 
 #include "stm32f1xx_hal.h"
 #include "usart.h"
-#include "i2c.h"
 #include "esp/esp.h"
 
 
