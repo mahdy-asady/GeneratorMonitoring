@@ -1,7 +1,7 @@
 #include <stdio.h>
 
+#include "config.h"
 #include "board.h"
-
 #include "stm32f1xx_hal.h"
 #include "usart.h"
 #include "esp/esp.h"
@@ -30,8 +30,8 @@ int main(void) {
 
     printf("\n\nBoard Start!!!\n");
 
-    espWifiConnect("esp32", "123456789");
-    espStartPassThroughUDP("192.168.11.157", 4000, 4000);
+    espWifiConnect(WIFI_SSID, WIFI_PASS);
+    espStartPassThroughUDP(SERVER_ADDR, SERVER_PORT, UDP_LISTEN_PORT);
     
     //just a test
     usartWrite(&usartESP, (uint8_t *)"012345678901234567890123456789012345", 36);

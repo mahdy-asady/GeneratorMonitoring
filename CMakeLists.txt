@@ -10,6 +10,7 @@ set(CMAKE_EXE_LINKER_FLAGS_INIT "-specs=nosys.specs -specs=nano.specs")
 set(PREFIX arm-none-eabi-)
 set(CTUNING   "-fno-builtin -ffunction-sections -fdata-sections")
 set(CMCU      "-mcpu=cortex-m3 -DSTM32F103xB -mthumb -DUSE_HAL_DRIVER")
+set(PRJOPT    "-DWIFI_SSID=\"\\\"${WIFI_SSID}\\\"\" -DWIFI_PASS=\"\\\"${WIFI_PASS}\\\"\" -DSERVER_ADDR=\"\\\"${SERVER_ADDR}\\\"\" -DSERVER_PORT=${SERVER_PORT}")
 
 if( BUILD STREQUAL "release")
 
@@ -25,8 +26,8 @@ endif()
 
 
 
-set(CFLAGS   "${CMCU} ${CDEBUG} ${CDEFS} ${COPT} ${CWARN} ${CSTANDARD} ${CTUNING}")
-set(CXXFLAGS "${CMCU} ${CDEBUG} ${CDEFS} ${COPT} ${CTUNING}")
+set(CFLAGS   "${CMCU} ${CDEBUG} ${CDEFS} ${COPT} ${CWARN} ${CSTANDARD} ${CTUNING} ${PRJOPT}")
+set(CXXFLAGS "${CMCU} ${CDEBUG} ${CDEFS} ${COPT} ${CTUNING} ${PRJOPT}")
 
 # program names
 set(CPP   ${PREFIX}g++)
