@@ -7,8 +7,6 @@
 #include "i2c.h"
 #include "esp/esp.h"
 #include "rht.h"
-#include "MotionTracking.h"
-#include "adc.h"
 
 
 enum MessageTypes {
@@ -51,13 +49,6 @@ int main(void) {
 
         printf("Buttons: %d, %d\n\n", boardReadDigit1(), boardReadDigit2());
         
-        printf("Gyro:\tX: %d\tY:%d\tZ:%d",  MotionTrackingReadGyroX(&i2cHandler), 
-                                            MotionTrackingReadGyroY(&i2cHandler), 
-                                            MotionTrackingReadGyroZ(&i2cHandler));
-
-        printf("\t\tAccel:\tX: %d\tY:%d\tZ:%d\n",  MotionTrackingReadAccX(&i2cHandler), 
-                                             MotionTrackingReadAccY(&i2cHandler), 
-                                             MotionTrackingReadAccZ(&i2cHandler));
 */
         boardToggleHealthLED();
         HAL_Delay(500);

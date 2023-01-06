@@ -65,7 +65,7 @@ void boardInit(usartHandle *usartDebugHandler, usartHandle *usartEspHandler, I2C
     timerInputCaptureInit(timerHandler, TIM_CHANNEL_1, &rpmPulseInterrupt);
     timerInputCaptureStart(timerHandler, TIM_CHANNEL_1);
 
-    senseTimerInit(timerHandler, TIM_CHANNEL_4);
+    senseTimerInit(timerHandler, TIM_CHANNEL_4, i2cHandler);
 }
 
 void boardToggleHealthLED(void) {

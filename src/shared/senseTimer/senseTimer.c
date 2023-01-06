@@ -1,13 +1,23 @@
-#include "stm32f1xx_hal.h"
+#include <stdio.h>
 
+#include "stm32f1xx_hal.h"
 #include "timer.h"
+#include "MotionTracking.h"
 
 TIM_HandleTypeDef *sTimerHandler;
+I2C_HandleTypeDef *sI2cHandler;
 uint32_t senseChannel;
 uint16_t senseCounter;
 
 void measureGyro(void) {
-
+    //printf("Gyro:\tX: %d\tY:%d\tZ:%d",  MotionTrackingReadGyroX(sI2cHandler), 
+    //                                    MotionTrackingReadGyroY(sI2cHandler), 
+    //                                    MotionTrackingReadGyroZ(sI2cHandler));
+    //
+    //printf("\t\tAccel:\tX: %d\tY:%d\tZ:%d\n",  MotionTrackingReadAccX(sI2cHandler), 
+    //                                        MotionTrackingReadAccY(sI2cHandler), 
+    //                                        MotionTrackingReadAccZ(sI2cHandler));
+    printf("Gyro\n");
 }
 
 void measureTemperature(void) {
@@ -36,11 +46,12 @@ void senseTimerInterrupt(uint16_t counterPulse) {
 }
 
 
-void senseTimerInit(TIM_HandleTypeDef *timerHandler, uint32_t timerChannel) {
+void senseTimerInit(TIM_HandleTypeDef *timerHandler, uint32_t timerChannel, I2C_HandleTypeDef *i2cHandler) {
     senseCounter = 0;
     sTimerHandler = timerHandler;
     senseChannel = timerChannel;
+    sI2cHandler = i2cHandler;
 
     timerOutputCompareInit(timerHandler, timerChannel, &senseTimerInterrupt);
-    timerOutputCompareStart(timerHandler, timerChannel, timerHandler->Instance->CNT + 1);
+    timerOutputCompareStart(timerHandler, timerChannel, timerHandler->Instance->CNT + 10);
 }
