@@ -3,6 +3,7 @@
 #include "stm32f1xx_hal.h"
 #include "timer.h"
 #include "MotionTracking.h"
+#include "rht.h"
 
 TIM_HandleTypeDef *sTimerHandler;
 I2C_HandleTypeDef *sI2cHandler;
@@ -21,7 +22,8 @@ void measureGyro(void) {
 }
 
 void measureTemperature(void) {
-
+    printf("Temperature data: %d\n", rhtReadTemerature(sI2cHandler));
+    printf("Humidity data: %d\n", rhtReadHumidity(sI2cHandler));
 }
 
 void measurePowerDetails(void) {

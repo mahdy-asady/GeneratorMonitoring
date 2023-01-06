@@ -6,7 +6,6 @@
 #include "usart.h"
 #include "i2c.h"
 #include "esp/esp.h"
-#include "rht.h"
 
 
 enum MessageTypes {
@@ -43,9 +42,6 @@ int main(void) {
         if(usartRead(&usartESP, (uint8_t *)&ReceptionBuffer, 2, 500)) {
             printf("Message received: %d, %d\n", ReceptionBuffer.MessageType, ReceptionBuffer.Data);
         }
-        
-        printf("Temperature data: %d\n", rhtReadTemerature(&i2cHandler));
-        printf("Humidity data: %d\n", rhtReadHumidity(&i2cHandler));
 
         printf("Buttons: %d, %d\n\n", boardReadDigit1(), boardReadDigit2());
         
