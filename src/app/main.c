@@ -30,11 +30,9 @@ int main(void) {
 
     TIM_HandleTypeDef timerHandler = {0};
     
-    boardInit(&usartDebug, &usartESP, &i2cHandler);
+    boardInit(&usartDebug, &usartESP, &i2cHandler, &timerHandler);
 
     printf("\n\nBoard Start!!!\n");
-
-    boardInitTimer(&timerHandler);
 
     espWifiConnect("esp32", "123456789");
     espStartPassThroughUDP("192.168.11.157", 4000, 4000);

@@ -38,7 +38,7 @@ void boardGpioInit(void) {
     HAL_GPIO_Init(GPIOB, &GPIO_InitStruct);
 }
 
-void boardInit(usartHandle *usartDebugHandler, usartHandle *usartEspHandler, I2C_HandleTypeDef *i2cHandler) {
+void boardInit(usartHandle *usartDebugHandler, usartHandle *usartEspHandler, I2C_HandleTypeDef *i2cHandler, TIM_HandleTypeDef *timerHandler) {
     // Init system...
     HAL_Init();
     clockConfig();
@@ -56,11 +56,10 @@ void boardInit(usartHandle *usartDebugHandler, usartHandle *usartEspHandler, I2C
     MotionTrackingInit(i2cHandler);
 
     espInit(usartEspHandler, GPIOB, GPIO_PIN_8);
-}
 
-void boardInitTimer(TIM_HandleTypeDef *timerHandler) {
+    // init main timer
     timerInit(timerHandler, TIM2);
-    
+    //init generator zerocross detector & voltage reader
     generatorInit(ADC1, ADC_CHANNEL_4, timerHandler, TIM_CHANNEL_2, TIM_CHANNEL_3);
     
     timerInputCaptureInit(timerHandler, TIM_CHANNEL_1, &rpmPulseInterrupt);
