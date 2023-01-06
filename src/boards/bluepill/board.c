@@ -54,10 +54,8 @@ void boardInit(usartHandle *usartDebugHandler, usartHandle *usartEspHandler, I2C
     //init I2C communication
     i2cInit(i2cHandler, I2C1);
     MotionTrackingInit(i2cHandler);
-}
 
-void boardInitEsp(usartHandle *usartHandler) {
-    espInit(usartHandler, GPIOB, GPIO_PIN_8);
+    espInit(usartEspHandler, GPIOB, GPIO_PIN_8);
 }
 
 void boardInitTimer(TIM_HandleTypeDef *timerHandler) {

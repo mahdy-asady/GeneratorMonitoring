@@ -34,7 +34,6 @@ int main(void) {
 
     printf("\n\nBoard Start!!!\n");
 
-    boardInitEsp(&usartESP);
     boardInitTimer(&timerHandler);
 
     espWifiConnect("esp32", "123456789");
