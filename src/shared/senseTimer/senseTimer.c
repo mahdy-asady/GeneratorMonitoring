@@ -1,6 +1,7 @@
 #include <stdio.h>
 
 #include "stm32f1xx_hal.h"
+#include "config.h"
 #include "timer.h"
 #include "MotionTracking.h"
 #include "rht.h"
@@ -27,14 +28,12 @@ void measureTemperature(void) {
 }
 
 void senseTimerInterrupt(uint16_t counterPulse) {
-    timerOutputCompareStart(sTimerHandler, senseChannel, counterPulse + 10);
-
-    if(++senseCounter == 65000)
-        senseCounter = 0;
+    timerOutputCompareStart(sTimerHandler, senseChannel, counterPulse + SENSING_GAP);
 
     measureGyro();
 
-    if((senseCounter % 100) == 0) {
+    if((senseCounter % SENSING_TEMP_PERIOD) == 0) {
+        senseCounter = 0;
         measureTemperature();
     }
 }
@@ -47,5 +46,5 @@ void senseTimerInit(TIM_HandleTypeDef *timerHandler, uint32_t timerChannel, I2C_
     sI2cHandler = i2cHandler;
 
     timerOutputCompareInit(timerHandler, timerChannel, &senseTimerInterrupt);
-    timerOutputCompareStart(timerHandler, timerChannel, timerHandler->Instance->CNT + 10);
+    timerOutputCompareStart(timerHandler, timerChannel, timerHandler->Instance->CNT + SENSING_GAP);
 }

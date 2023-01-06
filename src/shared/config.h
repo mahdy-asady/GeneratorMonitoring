@@ -16,4 +16,9 @@
 
 #define ADC_TIMEOUT                     50
 
+
+#define SENSING_GAP                     10
+
+#define SENSING_TEMP_PERIOD             100
+
 #endif
