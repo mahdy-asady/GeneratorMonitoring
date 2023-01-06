@@ -1,5 +1,6 @@
 #include "stm32f1xx_hal.h"
 
+#include "config.h"
 #include "board.h"
 #include "clock.h"
 #include "timer.h"
@@ -45,11 +46,11 @@ void boardInit(usartHandle *usartDebugHandler, usartHandle *usartEspHandler, I2C
     boardGpioInit();
 
     //init usart for debug communication
-    usartInit(usartDebugHandler, USART2, 115200);
+    usartInit(usartDebugHandler, USART2, USART_DEBUG_BAUD);
     usartEnableDebug(usartDebugHandler);
 
     //init usart for ESP32 communication
-    usartInit(usartEspHandler, USART1, 115200);
+    usartInit(usartEspHandler, USART1, USART_ESP_BAUD);
 
     //init I2C communication
     i2cInit(i2cHandler, I2C1);

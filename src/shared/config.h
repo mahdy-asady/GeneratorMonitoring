@@ -4,7 +4,13 @@
 
 #define FIFO_BUFFER_SIZE                100
 
+
 #define USART_COUNT                     3
+
+#define USART_DEBUG_BAUD                115200
+
+#define USART_ESP_BAUD                115200
+
 
 #define ESP_RESPONSE_BUFFER_LENGTH      100
 
