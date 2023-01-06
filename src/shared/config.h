@@ -2,6 +2,8 @@
 #define __CONFIG_H__
 
 
+#define TIMER_PRESCALER                 7200
+
 #define FIFO_BUFFER_SIZE                100
 
 
@@ -17,6 +19,7 @@
 #define ESP_DEFAULT_RESPONSE_DELAY      200
 
 #define ESP_AP_CONNECTION_DELAY         5000
+
 
 #define I2C_TIMEOUT                     50
 

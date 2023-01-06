@@ -1,3 +1,4 @@
+#include "config.h"
 #include "timer.h"
 #include "debug.h"
 #include "board.h"
@@ -30,7 +31,7 @@ void timerInit(TIM_HandleTypeDef *tHandler, TIM_TypeDef *Timer) {
     TIM_MasterConfigTypeDef sMasterConfig = {0};
 
     tHandler->Instance = Timer;
-    tHandler->Init.Prescaler = 7200-1;
+    tHandler->Init.Prescaler = TIMER_PRESCALER - 1;
     tHandler->Init.CounterMode = TIM_COUNTERMODE_UP;
     tHandler->Init.Period = 65535;
     tHandler->Init.ClockDivision = TIM_CLOCKDIVISION_DIV1;
