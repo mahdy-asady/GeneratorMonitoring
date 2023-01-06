@@ -7,6 +7,7 @@
 #include "rpm.h"
 #include "MotionTracking.h"
 #include "generator.h"
+#include "senseTimer/senseTimer.h"
 
 
 void boardGpioInit(void) {
@@ -68,6 +69,8 @@ void boardInitTimer(TIM_HandleTypeDef *timerHandler) {
     
     timerInputCaptureInit(timerHandler, TIM_CHANNEL_1, &rpmPulseInterrupt);
     timerInputCaptureStart(timerHandler, TIM_CHANNEL_1);
+
+    senseTimerInit(timerHandler, TIM_CHANNEL_4);
 }
 
 void boardToggleHealthLED(void) {
