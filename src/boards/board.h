@@ -6,11 +6,7 @@
 
 
 /* Initalize Board */
-void boardInit(void);
-
-void boardInitUsartEsp(usartHandle *usartHandler);
-
-void boardInitUsartDebug(usartHandle *usartHandler);
+void boardInit(usartHandle *usartDebugHandler, usartHandle *usartEspHandler);
 
 void boardInitI2C(I2C_HandleTypeDef *i2cHandler);
 

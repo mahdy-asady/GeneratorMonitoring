@@ -38,19 +38,18 @@ void boardGpioInit(void) {
     HAL_GPIO_Init(GPIOB, &GPIO_InitStruct);
 }
 
-void boardInit(void) {
+void boardInit(usartHandle *usartDebugHandler, usartHandle *usartEspHandler) {
+    // Init system...
     HAL_Init();
     clockConfig();
     boardGpioInit();
-}
 
-void boardInitUsartEsp(usartHandle *usartHandler) {
-    usartInit(usartHandler, USART1, 115200);
-}
+    //init usart for debug communication
+    usartInit(usartDebugHandler, USART2, 115200);
+    usartEnableDebug(usartDebugHandler);
 
-void boardInitUsartDebug(usartHandle *usartHandler) {
-    usartInit(usartHandler, USART2, 115200);
-    usartEnableDebug(usartHandler);
+    //init usart for ESP32 communication
+    usartInit(usartEspHandler, USART1, 115200);
 }
 
 void boardInitI2C(I2C_HandleTypeDef *i2cHandler) {
