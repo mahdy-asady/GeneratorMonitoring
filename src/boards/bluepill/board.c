@@ -38,7 +38,7 @@ void boardGpioInit(void) {
     HAL_GPIO_Init(GPIOB, &GPIO_InitStruct);
 }
 
-void boardInit(usartHandle *usartDebugHandler, usartHandle *usartEspHandler) {
+void boardInit(usartHandle *usartDebugHandler, usartHandle *usartEspHandler, I2C_HandleTypeDef *i2cHandler) {
     // Init system...
     HAL_Init();
     clockConfig();
@@ -50,9 +50,8 @@ void boardInit(usartHandle *usartDebugHandler, usartHandle *usartEspHandler) {
 
     //init usart for ESP32 communication
     usartInit(usartEspHandler, USART1, 115200);
-}
 
-void boardInitI2C(I2C_HandleTypeDef *i2cHandler) {
+    //init I2C communication
     i2cInit(i2cHandler, I2C1);
     MotionTrackingInit(i2cHandler);
 }

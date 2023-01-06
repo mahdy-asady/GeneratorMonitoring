@@ -30,11 +30,10 @@ int main(void) {
 
     TIM_HandleTypeDef timerHandler = {0};
     
-    boardInit(&usartDebug, &usartESP);
+    boardInit(&usartDebug, &usartESP, &i2cHandler);
 
     printf("\n\nBoard Start!!!\n");
 
-    boardInitI2C(&i2cHandler);
     boardInitEsp(&usartESP);
     boardInitTimer(&timerHandler);
 
