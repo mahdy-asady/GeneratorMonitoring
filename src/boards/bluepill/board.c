@@ -7,6 +7,7 @@
 #include "rpm.h"
 #include "MotionTracking.h"
 #include "generator.h"
+#include "senseTimer/senseTimer.h"
 
 
 void boardGpioInit(void) {
@@ -37,37 +38,34 @@ void boardGpioInit(void) {
     HAL_GPIO_Init(GPIOB, &GPIO_InitStruct);
 }
 
-void boardInit(void) {
+void boardInit(usartHandle *usartDebugHandler, usartHandle *usartEspHandler, I2C_HandleTypeDef *i2cHandler, TIM_HandleTypeDef *timerHandler) {
+    // Init system...
     HAL_Init();
     clockConfig();
     boardGpioInit();
-}
 
-void boardInitUsartEsp(usartHandle *usartHandler) {
-    usartInit(usartHandler, USART1, 115200);
-}
+    //init usart for debug communication
+    usartInit(usartDebugHandler, USART2, 115200);
+    usartEnableDebug(usartDebugHandler);
 
-void boardInitUsartDebug(usartHandle *usartHandler) {
-    usartInit(usartHandler, USART2, 115200);
-    usartEnableDebug(usartHandler);
-}
+    //init usart for ESP32 communication
+    usartInit(usartEspHandler, USART1, 115200);
 
-void boardInitI2C(I2C_HandleTypeDef *i2cHandler) {
+    //init I2C communication
     i2cInit(i2cHandler, I2C1);
     MotionTrackingInit(i2cHandler);
-}
 
-void boardInitEsp(usartHandle *usartHandler) {
-    espInit(usartHandler, GPIOB, GPIO_PIN_8);
-}
+    espInit(usartEspHandler, GPIOB, GPIO_PIN_8);
 
-void boardInitTimer(TIM_HandleTypeDef *timerHandler) {
+    // init main timer
     timerInit(timerHandler, TIM2);
-    
+    //init generator zerocross detector & voltage reader
     generatorInit(ADC1, ADC_CHANNEL_4, timerHandler, TIM_CHANNEL_2, TIM_CHANNEL_3);
     
     timerInputCaptureInit(timerHandler, TIM_CHANNEL_1, &rpmPulseInterrupt);
     timerInputCaptureStart(timerHandler, TIM_CHANNEL_1);
+
+    senseTimerInit(timerHandler, TIM_CHANNEL_4, i2cHandler);
 }
 
 void boardToggleHealthLED(void) {

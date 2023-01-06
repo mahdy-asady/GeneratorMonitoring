@@ -6,17 +6,7 @@
 
 
 /* Initalize Board */
-void boardInit(void);
-
-void boardInitUsartEsp(usartHandle *usartHandler);
-
-void boardInitUsartDebug(usartHandle *usartHandler);
-
-void boardInitI2C(I2C_HandleTypeDef *i2cHandler);
-
-void boardInitEsp(usartHandle *usartHandler);
-
-void boardInitTimer(TIM_HandleTypeDef *timerHandler);
+void boardInit(usartHandle *usartDebugHandler, usartHandle *usartEspHandler, I2C_HandleTypeDef *i2cHandler, TIM_HandleTypeDef *timerHandler);
 
 void boardToggleHealthLED(void);
 
