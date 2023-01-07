@@ -48,6 +48,10 @@ void generatorInit(ADC_TypeDef *ADC, uint32_t ADC_Channel, TIM_HandleTypeDef *tH
     gTimerHandler = tHandler;
     voltageChannel = voltageTimerChannel;
 
+    fifo32Init(&frequencyFifo);
+    fifo32Init(&dutyFifo);
+    fifo32Init(&voltageFifo);
+
     adcInit(&voltageAdcHandler, ADC, ADC_Channel);
 
     timerInputCaptureInit(tHandler, zeroCrossTimerChannel, &generatorZeroCrossInterrupt);
