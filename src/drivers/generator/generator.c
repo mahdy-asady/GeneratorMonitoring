@@ -1,4 +1,4 @@
-#include <stdio.h>
+#include <stdbool.h>
 
 #include "stm32f1xx_hal.h"
 #include "adc.h"
@@ -9,11 +9,16 @@ ADC_HandleTypeDef voltageAdcHandler;
 
 TIM_HandleTypeDef *gTimerHandler;
 uint32_t voltageChannel;
-uint16_t generatorPreviousTick;
+uint16_t generatorPreviousTick,
+         cyclePreviousDuration;
+
+bool isPulseForOddTurn;
 
 fifo32Data  frequencyFifo,
             dutyFifo,
             voltageFifo;
+
+
 
 void generatorReadVoltage(uint16_t timerPulse) {
     timerOutputCompareStop(gTimerHandler, voltageChannel);
@@ -28,6 +33,15 @@ void generatorZeroCrossInterrupt(uint16_t PulseTick) {
     generatorPreviousTick = PulseTick;
     if(!fifo32IsFull(&frequencyFifo))
         fifo32Push(&frequencyFifo, 10000 / (duration * 2));
+    
+    if(isPulseForOddTurn) {
+        if(!fifo32IsFull(&dutyFifo))
+            fifo32Push(&dutyFifo, 100 * duration / (duration + cyclePreviousDuration));
+    }
+    else {
+        cyclePreviousDuration = duration;
+    }
+    isPulseForOddTurn = !isPulseForOddTurn;
 }
 
 void generatorInit(ADC_TypeDef *ADC, uint32_t ADC_Channel, TIM_HandleTypeDef *tHandler, uint32_t zeroCrossTimerChannel, uint32_t voltageTimerChannel) {
