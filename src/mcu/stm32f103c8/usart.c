@@ -25,7 +25,7 @@ bool findHandler(UART_HandleTypeDef *HAL_Handler, usartHandle **handler) {
 }
 
 bool usartInit(usartHandle *handle, USART_TypeDef *usartInstance, uint32_t baudRate) {
-    fifoInit(&handle->buffer);
+    fifo8Init(&handle->buffer);
 
     handle->HAL_Handler.Instance = usartInstance;
     handle->HAL_Handler.Init.BaudRate = baudRate;
@@ -68,8 +68,8 @@ void HAL_UART_RxCpltCallback(UART_HandleTypeDef *huart)
     if(findHandler(huart, &handle)) {
         HAL_UART_Receive_IT(&handle->HAL_Handler, &handle->rxCharBuffer, 1);
         //call buffer function
-        if(!fifoIsFull(&handle->buffer))
-            fifoPush(&handle->buffer, handle->rxCharBuffer);
+        if(!fifo8IsFull(&handle->buffer))
+            fifo8Push(&handle->buffer, handle->rxCharBuffer);
         
     }
 }
@@ -89,8 +89,8 @@ uint16_t usartRead(usartHandle *handle, uint8_t *Buffer, uint16_t MaxSize, uint1
     uint8_t *BufferPointer = Buffer;
     
     while(((HAL_GetTick() - TickStart) <= Timeout) && Size < MaxSize) {
-        if(!fifoIsEmpty(&handle->buffer)) {
-            *(BufferPointer++) = fifoPop(&handle->buffer);
+        if(!fifo8IsEmpty(&handle->buffer)) {
+            *(BufferPointer++) = fifo8Pop(&handle->buffer);
             Size++;
         }
     }
@@ -104,8 +104,8 @@ uint16_t usartReadLine(usartHandle *handle, char *Buffer, uint16_t MaxSize, uint
     char *BufferPointer = Buffer;
 
     while(((HAL_GetTick() - TickStart) <= Timeout) && Size < MaxSize) {
-        if(!fifoIsEmpty(&handle->buffer)) {
-            *BufferPointer = (char)fifoPop(&handle->buffer);
+        if(!fifo8IsEmpty(&handle->buffer)) {
+            *BufferPointer = (char)fifo8Pop(&handle->buffer);
             
             if(*BufferPointer == '\n') {
                 //remove \r\n
@@ -125,7 +125,7 @@ uint16_t usartReadLine(usartHandle *handle, char *Buffer, uint16_t MaxSize, uint
 }
 
 void usartFlushBuffer(usartHandle *handle) {
-    while(!fifoIsEmpty(&handle->buffer)) {
+    while(!fifo8IsEmpty(&handle->buffer)) {
         uint8_t tmpBuffer;
         usartRead(handle, &tmpBuffer, 1, 0);
     }
