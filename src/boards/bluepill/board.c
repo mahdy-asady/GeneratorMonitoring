@@ -63,8 +63,7 @@ void boardInit(usartHandle *usartDebugHandler, usartHandle *usartEspHandler, I2C
     //init generator zerocross detector & voltage reader
     generatorInit(ADC1, ADC_CHANNEL_4, timerHandler, TIM_CHANNEL_2, TIM_CHANNEL_3);
     
-    timerInputCaptureInit(timerHandler, TIM_CHANNEL_1, &rpmPulseInterrupt);
-    timerInputCaptureStart(timerHandler, TIM_CHANNEL_1);
+    rpmInit(timerHandler, TIM_CHANNEL_1);
 
     senseTimerInit(timerHandler, TIM_CHANNEL_4, i2cHandler);
 }
