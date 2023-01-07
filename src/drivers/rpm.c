@@ -1,14 +1,22 @@
 #include "rpm.h"
+#include "fifo/fifo.h"
 
 uint16_t prevTick;
-#include <stdio.h>
+
+fifo32Data rpmFifo;
+
+
 void rpmPulseInterrupt(uint16_t PulseTick) {
     uint16_t duration = PulseTick - prevTick;
     prevTick = PulseTick;
-    printf("Got pulse at: %d \tRPM: %d\n", duration,  60 * 10000 / duration);
+
+    if(!fifo32IsFull(&rpmFifo))
+            fifo32Push(&rpmFifo, 60 * 10000 / duration);
 }
 
 void rpmInit(TIM_HandleTypeDef *timerHandler, uint32_t timerChannel) {
+    fifo32Init(&rpmFifo);
+    
     timerInputCaptureInit(timerHandler, timerChannel, &rpmPulseInterrupt);
     timerInputCaptureStart(timerHandler, timerChannel);
 }
