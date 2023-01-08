@@ -29,5 +29,6 @@
 
 #define SENSING_GAP                     10
 #define SENSING_TEMP_PERIOD             100
+#define SENSING_REPORT_PERIOD           1000
 
 #endif

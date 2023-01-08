@@ -76,6 +76,7 @@ set(INC_FILES src/app/main.c
               src/shared/string/string.c
               src/shared/retarget/retarget.c
               src/shared/senseTimer/senseTimer.c
+              src/shared/sampling/sampling.c
 
               src/mcu/stm32f103c8/stm32f1xx_hal_msp.c
               src/mcu/stm32f103c8/stm32f1xx_it.c

@@ -4,6 +4,7 @@
 #include "MotionTracking.h"
 #include "rht.h"
 #include "fifo/fifo.h"
+#include "sampling/sampling.h"
 
 TIM_HandleTypeDef *sTimerHandler;
 I2C_HandleTypeDef *sI2cHandler;
@@ -43,10 +44,16 @@ void senseTimerInterrupt(uint16_t counterPulse) {
     timerOutputCompareStart(sTimerHandler, senseChannel, counterPulse + SENSING_GAP);
 
     measureGyro();
-
-    if((++senseCounter % SENSING_TEMP_PERIOD) == 0) {
+    
+    if(++senseCounter == 65000)
         senseCounter = 0;
+
+    if((senseCounter % SENSING_TEMP_PERIOD) == 0) {
         measureTemperature();
+    }
+
+    if((senseCounter % SENSING_REPORT_PERIOD) == 0) {
+        samplingGenerateReport();
     }
 }
 
