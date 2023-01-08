@@ -14,8 +14,6 @@
 #define REG_GYRO_Y      0x45
 #define REG_GYRO_Z      0x47
 
-int16_t mpu6050ReadRegister(I2C_HandleTypeDef *i2cHandler, uint8_t registerAddr);
-
 void MotionTrackingInit(I2C_HandleTypeDef *i2cHandler) {
     uint8_t resetOp = 0x00;
 
@@ -25,43 +23,22 @@ void MotionTrackingInit(I2C_HandleTypeDef *i2cHandler) {
     }
 }
 
-int16_t MotionTrackingReadGyroX(I2C_HandleTypeDef *i2cHandler) {
-    return mpu6050ReadRegister(i2cHandler, REG_GYRO_X);
-}
+MotionTrackingInfo MotionTrackingReadData(I2C_HandleTypeDef *i2cHandler) {
+    MotionTrackingInfo result = {0};
 
-int16_t MotionTrackingReadGyroY(I2C_HandleTypeDef *i2cHandler) {
-    return mpu6050ReadRegister(i2cHandler, REG_GYRO_Y);
-}
+    uint8_t i2cResult[14];
 
-int16_t MotionTrackingReadGyroZ(I2C_HandleTypeDef *i2cHandler) {
-    return mpu6050ReadRegister(i2cHandler, REG_GYRO_Z);
-}
-
-
-int16_t MotionTrackingReadAccX(I2C_HandleTypeDef *i2cHandler) {
-    return mpu6050ReadRegister(i2cHandler, REG_ACCEL_X);
-}
-
-int16_t MotionTrackingReadAccY(I2C_HandleTypeDef *i2cHandler) {
-    return mpu6050ReadRegister(i2cHandler, REG_ACCEL_Y);
-}
-
-int16_t MotionTrackingReadAccZ(I2C_HandleTypeDef *i2cHandler) {
-    return mpu6050ReadRegister(i2cHandler, REG_ACCEL_Z);
-}
-
-
-
-
-
-
-int16_t mpu6050ReadRegister(I2C_HandleTypeDef *i2cHandler, uint8_t registerAddr) {
-    uint8_t i2cResult[2];
-
-    if(!i2cReadMemory(i2cHandler, MPU6050_ADDR, registerAddr, i2cResult, 2)) {
+    if(!i2cReadMemory(i2cHandler, MPU6050_ADDR, REG_ACCEL_X, i2cResult, 14)) {
         debugError("I2C Read Error on MotionTracking");
-        return 0;
     }
 
-    return (i2cResult[0] << 8) | (i2cResult[1] & 0xFC);
+    result.accelX = (i2cResult[0] << 8) | (i2cResult[1] & 0xFC);
+    result.accelY = (i2cResult[2] << 8) | (i2cResult[3] & 0xFC);
+    result.accelZ = (i2cResult[4] << 8) | (i2cResult[5] & 0xFC);
+
+    result.gyroX = (i2cResult[8] << 8) | (i2cResult[9] & 0xFC);
+    result.gyroY = (i2cResult[10] << 8) | (i2cResult[11] & 0xFC);
+    result.gyroZ = (i2cResult[12] << 8) | (i2cResult[13] & 0xFC);
+
+    return result;
 }

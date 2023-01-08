@@ -15,19 +15,20 @@ fifo32Data  gyroXFifo,  gyroYFifo,  gyroZFifo,
             tempFifo, humidFifo;
 
 void measureGyro(void) {
+    MotionTrackingInfo data = MotionTrackingReadData(sI2cHandler);
     if(!fifo32IsFull(&gyroXFifo))
-        fifo32Push(&gyroXFifo, MotionTrackingReadGyroX(sI2cHandler));
+        fifo32Push(&gyroXFifo, data.gyroX);
     if(!fifo32IsFull(&gyroYFifo))
-        fifo32Push(&gyroYFifo, MotionTrackingReadGyroY(sI2cHandler));
+        fifo32Push(&gyroYFifo, data.gyroY);
     if(!fifo32IsFull(&gyroZFifo))
-        fifo32Push(&gyroZFifo, MotionTrackingReadGyroZ(sI2cHandler));
+        fifo32Push(&gyroZFifo, data.gyroZ);
 
     if(!fifo32IsFull(&accelXFifo))
-        fifo32Push(&accelXFifo, MotionTrackingReadAccX(sI2cHandler));
+        fifo32Push(&accelXFifo, data.accelX);
     if(!fifo32IsFull(&accelYFifo))
-        fifo32Push(&accelYFifo, MotionTrackingReadAccY(sI2cHandler));
+        fifo32Push(&accelYFifo, data.accelY);
     if(!fifo32IsFull(&accelZFifo))
-        fifo32Push(&accelZFifo, MotionTrackingReadAccZ(sI2cHandler));
+        fifo32Push(&accelZFifo, data.accelZ);
 }
 
 void measureTemperature(void) {
@@ -43,7 +44,7 @@ void senseTimerInterrupt(uint16_t counterPulse) {
 
     measureGyro();
 
-    if((senseCounter % SENSING_TEMP_PERIOD) == 0) {
+    if((++senseCounter % SENSING_TEMP_PERIOD) == 0) {
         senseCounter = 0;
         measureTemperature();
     }
