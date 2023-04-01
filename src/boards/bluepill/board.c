@@ -29,8 +29,7 @@ void boardGpioInit(void) {
     /*  Pin B9: Health LED
         Pin B8: ESP Reset
     */
-    HAL_GPIO_WritePin(GPIOB, GPIO_PIN_9, GPIO_PIN_RESET);
-    HAL_GPIO_WritePin(GPIOB, GPIO_PIN_8, GPIO_PIN_SET);
+    HAL_GPIO_WritePin(GPIOB, GPIO_PIN_8 | GPIO_PIN_9, GPIO_PIN_RESET);
 
     GPIO_InitStruct.Pin = GPIO_PIN_9 | GPIO_PIN_8;
     GPIO_InitStruct.Mode = GPIO_MODE_OUTPUT_PP;
