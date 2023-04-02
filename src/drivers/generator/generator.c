@@ -14,9 +14,9 @@ uint16_t generatorPreviousTick,
 
 bool isPulseForOddTurn;
 
-fifo32Data  frequencyFifo,
-            dutyFifo,
-            voltageFifo;
+extern fifo32Data   frequencyFifo,
+                    dutyFifo,
+                    voltageFifo;
 
 
 

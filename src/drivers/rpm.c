@@ -3,7 +3,7 @@
 
 uint16_t prevTick;
 
-fifo32Data rpmFifo;
+extern fifo32Data rpmFifo;
 
 
 void rpmPulseInterrupt(uint16_t PulseTick) {

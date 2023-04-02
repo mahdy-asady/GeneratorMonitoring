@@ -5,6 +5,19 @@
 #include "stm32f1xx_hal.h"
 #include "usart.h"
 #include "esp/esp.h"
+#include "fifo/fifo.h"
+
+
+// fifo data shared along modules for storing sensing info
+            // fifo data for electricity info
+fifo32Data  frequencyFifo, dutyFifo, voltageFifo,
+            // fifo data for gyro info
+            gyroXFifo,  gyroYFifo,  gyroZFifo,
+            accelXFifo, accelYFifo, accelZFifo,
+            // fifo data for temparature info 
+            tempFifo, humidFifo,
+            // fifo data for motor rotation speed
+            rpmFifo;
 
 
 enum MessageTypes {

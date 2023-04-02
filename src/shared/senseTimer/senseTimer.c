@@ -11,9 +11,9 @@ I2C_HandleTypeDef *sI2cHandler;
 uint32_t senseChannel;
 uint16_t senseCounter;
 
-fifo32Data  gyroXFifo,  gyroYFifo,  gyroZFifo,
-            accelXFifo, accelYFifo, accelZFifo,
-            tempFifo, humidFifo;
+extern fifo32Data   gyroXFifo,  gyroYFifo,  gyroZFifo,
+                    accelXFifo, accelYFifo, accelZFifo,
+                    tempFifo, humidFifo;
 
 void measureGyro(void) {
     MotionTrackingInfo data = MotionTrackingReadData(sI2cHandler);
